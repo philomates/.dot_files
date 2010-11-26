@@ -1,11 +1,11 @@
 #!/bin/sh
 
-ln -s .bashrc ~/
-ln -s .zshrc ~/
-ln -s .xmobarrc ~/
-ln -s .conkyrc ~/
-ln -s .pylintrc ~/
-ln -s .xinitrc ~/
+ln -s ~/.dot_files/.bashrc ~/.bashrc
+ln -s ~/.dot_files/.zshrc ~/.zshrc
+ln -s ~/.dot_files/.xmobarrc ~/.xmobarrc
+ln -s ~/.dot_files/.conkyrc ~/.conkyrc
+ln -s ~/.dot_files/.pylintrc ~/.pylintrc
+ln -s ~/.dot_files/.xinitrc ~/.xinitrc
 
 mkdir -p ~/.xmonad
-ln -s .xmonad/xmonad.hs ~/.xmonad/xmonad.hs
+ln -s ~/.dot_files/.xmonad/xmonad.hs ~/.xmonad/xmonad.hs
