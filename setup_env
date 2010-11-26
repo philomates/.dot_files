@@ -1,0 +1,11 @@
+#!/bin/sh
+
+ln -s .bashrc ~/
+ln -s .zshrc ~/
+ln -s .xmobarrc ~/
+ln -s .conkyrc ~/
+ln -s .pylintrc ~/
+ln -s .xinitrc ~/
+
+mkdir -p ~/.xmonad
+ln -s .xmonad/xmonad.hs ~/.xmonad/xmonad.hs
