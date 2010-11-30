@@ -180,14 +180,11 @@ wiki() { dig +short txt $1.wp.dg.cx;}
 # display top ten running processes sorted by memory usage
 alias tps='ps aux | sort -nk +4 | tail'
 
-alias vis7='ssh root@vis-7.sci.utah.edu'
-alias clabs='ssh mates@crowdlabs.sci.utah.edu'
 alias cade='ssh mates@lab2-26.eng.utah.edu'
-alias alps='ssh root@alps.ethz.ch'
 
-alias install='sudo apt-get install'
-alias search='sudo aptitude search'
-alias cp='cp -r '
+alias install='sudo pacman -S '
+alias search='sudo pacman -Ss'
+alias cp='nocorrect cp -r '
 alias scp='scp -r '
 alias mgrep='grep -A1 -B1 -n --color -r --exclude="*.{swp,pyc}"'
 alias hgrep='history 1 | grep '
@@ -198,6 +195,7 @@ alias rcedit='vim ~/.zshrc'
 alias psme='ps aux|grep `whoami`'
 
 alias mkdir='nocorrect mkdir'
+alias mv='nocorrect mv'
 
 alias ipy=ipython
 

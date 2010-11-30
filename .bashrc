@@ -5,9 +5,7 @@ export EDITOR='vi'
 # useful both for brevity (laziness) and cheao pseudo commands
 #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
-alias vis7='ssh root@vis-7.sci.utah.edu'
 alias cade='ssh mates@lab2-26.eng.utah.edu'
-alias crowdlabs='ssh mates@crowdlabs.sci.utah.edu'
 
 # web dev
 alias ar='/etc/init.d/apache2 restart'
@@ -81,9 +79,6 @@ alias psme='ps aux|grep `whoami`'
 
 alias ipy=ipython
 
-alias dj="cd /var/lib/python-support/python2.6/django"
-alias pydist="cd /usr/local/lib/python2.6/dist-packages"
-
 #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 # Custom functions
 #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -102,18 +97,6 @@ function formattedGitBranch {
 # show colorized svn diff
 function svndiff () { svn diff $@ | colordiff | less -R; }
 function gitdiff () { git diff $@ | colordiff | less -R; }
-
-# Creates useful aliases for working with subversion
-function svnaliases
-{
-	# Aliases for subversion (svn)
-	alias smv='svn move '
-	alias smk='svn mkdir '
-	alias sco='svn co '
-	alias scm='svn commit '
-	alias srm='svn remove '
-	alias sup='svn update '
-}
 
 #Quickly tar a dif or file
 function qtar
