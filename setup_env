@@ -9,3 +9,6 @@ ln -s ~/.dot_files/.xinitrc ~/.xinitrc
 
 mkdir -p ~/.xmonad
 ln -s ~/.dot_files/.xmonad/xmonad.hs ~/.xmonad/xmonad.hs
+
+mkdir -p ~/.irssi
+ln -s ~/.dot_files/.irssi/config ~/.irssi/config
