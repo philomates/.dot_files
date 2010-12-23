@@ -269,6 +269,6 @@ statusbar = {
   };
 };
 settings = {
-  core = { real_name = "Unknown"; user_name = "mates"; nick = "matey"; };
+  core = { real_name = "Unknown"; user_name = "mates"; nick = "pmatey"; };
   "fe-text" = { actlist_sort = "refnum"; };
 };

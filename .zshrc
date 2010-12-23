@@ -72,7 +72,6 @@ zmodload -a zsh/zprof zprof
 
 #{{{ Variables
 PATH="/usr/local/sbin/:/bin:/sbin:/usr/bin:/usr/sbin:$PATH"
-PYTHONPATH="/opt/alps/lib:$PYTHONPATH"
 GREP_OPTIONS="--exclude-dir=\.svn"
 
 TZ="America/Denver"
@@ -179,8 +178,6 @@ wiki() { dig +short txt $1.wp.dg.cx;}
 
 # display top ten running processes sorted by memory usage
 alias tps='ps aux | sort -nk +4 | tail'
-
-alias cade='ssh mates@lab2-26.eng.utah.edu'
 
 alias install='sudo pacman -S '
 alias search='sudo pacman -Ss'
@@ -307,4 +304,10 @@ zstyle '*' single-ignored show
 
 # cd will never select the parent directory (e.g.: cd ../<TAB>)
 zstyle ':completion:*:cd:*' ignore-parents parent pwd
+#}}}
+
+#{{{ Named directories
+quantis=/home/mates/repo/school/fall10/honors3600/quantis
+vt=/home/mates/vistrails/vistrails
+kindle=/media/Kindle/documents
 #}}}
