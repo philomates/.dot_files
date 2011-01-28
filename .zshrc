@@ -50,7 +50,7 @@ setopt prompt_subst
 # Set/unset  shell options
 setopt   notify correct globdots pushdtohome cdablevars autolist
 setopt   correctall autocd recexact longlistjobs
-setopt   autoresume histignoredups pushdsilent 
+setopt   autoresume histignoredups pushdsilent
 setopt   autopushd pushdminus extendedglob rcquotes mailwarning
 unsetopt bgnice autoparamslash
 
@@ -113,6 +113,15 @@ LANG='en_US.UTF-8'
 LC_CTYPE=C
 
 unsetopt ALL_EXPORT
+
+# Named Directories
+
+# School Dirs
+graph=/home/mates/home_repo/school/spring11/cs5600
+comp=/home/mates/home_repo/school/spring11/cs5470
+ece=/home/mates/home_repo/school/spring11/cs5780
+db=/home/mates/home_repo/school/spring11/cs5530
+
 #}}}
 
 #{{{ Functions
@@ -245,7 +254,7 @@ zstyle ':completion:*::::' completer _expand _complete _ignored _approximate
 # allow one error for every three characters typed in approximate completer
 zstyle -e ':completion:*:approximate:*' max-errors \
     'reply=( $(( ($#PREFIX+$#SUFFIX)/2 )) numeric )'
-    
+
 # insert all expansions for expand completer
 zstyle ':completion:*:expand:*' tag-order all-expansions
 
@@ -271,13 +280,13 @@ zstyle ':completion:*:*:-subscript-:*' tag-order indexes parameters
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 
 zstyle ':completion:*:*:kill:*:processes' command 'ps --forest -A -o pid,user,cmd'
-zstyle ':completion:*:processes-names' command 'ps axho command' 
+zstyle ':completion:*:processes-names' command 'ps axho command'
 #
 #NEW completion:
 # 1. All /etc/hosts hostnames are in autocomplete
 # 2. If you have a comment in /etc/hosts like #%foobar.domain,
 #    then foobar.domain will show up in autocomplete!
-zstyle ':completion:*' hosts $(awk '/^[^#]/ {print $2 $3" "$4" "$5}' /etc/hosts | grep -v ip6- && grep "^#%" /etc/hosts | awk -F% '{print $2}') 
+zstyle ':completion:*' hosts $(awk '/^[^#]/ {print $2 $3" "$4" "$5}' /etc/hosts | grep -v ip6- && grep "^#%" /etc/hosts | awk -F% '{print $2}')
 # Filename suffixes to ignore during completion (except after rm command)
 zstyle ':completion:*:*:(^rm):*:*files' ignored-patterns '*?.pyc' '*?.class' '*?.o' '*?.c~' \
     '*?.old' '*?.pro'
@@ -293,7 +302,7 @@ zstyle ':completion:*:*:*:users' ignored-patterns \
         dhcp dnsmasq fetchmail firebird gnats haldaemon hplip irc klog \
         list man cupsys postfix proxy syslog www-data mldonkey sys snort \
         mkdir
-        
+
 # SSH Completion
 zstyle ':completion:*:scp:*' tag-order \
    files users 'hosts:-host hosts:-domain:domain hosts:-ipaddr"IP\ Address *'
