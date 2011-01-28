@@ -101,7 +101,9 @@ chatnets = {
 
 channels = (
   { name = "#irssi"; chatnet = "ircnet"; autojoin = "No"; },
-  { name = "silc"; chatnet = "silc"; autojoin = "No"; },
+  { name = "#haskell"; chatnet = "Freenode"; autojoin = "yes"; },
+  { name = "#xmonad"; chatnet = "Freenode"; autojoin = "yes"; },
+  { name = "#python"; chatnet = "Freenode"; autojoin = "yes"; },
   { name = "#django"; chatnet = "Freenode"; autojoin = "yes"; }
 );
 
@@ -267,6 +269,6 @@ statusbar = {
   };
 };
 settings = {
-  core = { real_name = "Unknown"; user_name = "mates"; nick = "matey"; };
+  core = { real_name = "Unknown"; user_name = "mates"; nick = "pmatey"; };
   "fe-text" = { actlist_sort = "refnum"; };
 };

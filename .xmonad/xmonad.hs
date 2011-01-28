@@ -32,7 +32,7 @@ main :: IO ()
 main = xmonad =<< statusBar cmd pp kb conf
   where
     uhook = withUrgencyHookC NoUrgencyHook urgentConfig
-    cmd = "bash -c \"tee >(xmobar -x0) | xmobar -x1\""
+    cmd = "bash -c \"tee >(xmobar -x0) \""
     pp = customPP
     kb = toggleStrutsKey
     conf = uhook myConfig
@@ -58,10 +58,10 @@ manageHook' = composeAll . concat $
      , [ className =? "Gimp"      --> doFloat ]
      , [ className =? "Vlc"       --> doFloat ]
      , [ className =? "Evince"    --> doFloat ]
-     , [ (className =? "Firefox" <&&> resource =? "Dialog") --> doFloat ]
+     , [ isDialog --> doFloat ]
      , [ title =? "Downloads"     --> doFloat ]
      , [ fmap ( c `isInfixOf`) title     --> doFloat | c <- myMatchAnywhereFloatsT ]
-     , [ insertPosition Below Newer ]
+     , [ insertPosition Above Newer ]
      , [ transience' ]
      ]
      where myMatchAnywhereFloatsT = ["vistrails", "VisTrails"]
@@ -126,12 +126,11 @@ keys' conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     [ ((modMask,               xK_Return), spawn $ XMonad.terminal conf)
     , ((0,                     xK_Print), spawn "scrot")
     , ((modMask,               xK_p     ), spawn "dmenu_run")
-    , ((modMask .|. shiftMask, xK_p     ), spawn "gmrun")
+    , ((modMask .|. shiftMask, xK_p     ), spawn "i3lock -c 000000")
     , ((modMask .|. shiftMask, xK_m     ), spawn "claws-mail")
     , ((modMask,               xK_s     ), spawn "firefox")
     , ((modMask,               xK_d     ), spawn "thunar")
     , ((modMask .|. shiftMask, xK_c     ), kill)
-    , ((modMask .|. shiftMask, xK_l     ), spawn "i3lock")
 
     -- grid
     , ((modMask,               xK_g     ), goToSelected defaultGSConfig)
