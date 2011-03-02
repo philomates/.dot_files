@@ -120,6 +120,7 @@ graph=/home/mates/home_repo/school/spring11/cs5600
 comp=/home/mates/home_repo/school/spring11/cs5470
 ece=/home/mates/home_repo/school/spring11/cs5780
 db=/home/mates/home_repo/school/spring11/cs5530
+pan=/home/mates/sdc/panorama/interactive/src/
 
 #}}}
 
@@ -184,6 +185,8 @@ eval `keychain --eval id_rsa`
 
 # Query wikipedia
 wiki() { dig +short txt $1.wp.dg.cx;}
+
+alias cade='ssh mates@lab3-13.eng.utah.edu'
 
 # display top ten running processes sorted by memory usage
 alias tps='ps aux | sort -nk +4 | tail'
