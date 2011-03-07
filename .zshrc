@@ -119,8 +119,10 @@ unsetopt ALL_EXPORT
 graph=/home/mates/home_repo/school/spring11/cs5600
 comp=/home/mates/home_repo/school/spring11/cs5470
 ece=/home/mates/home_repo/school/spring11/cs5780
-db=/home/mates/home_repo/school/spring11/cs5530
+db=/home/mates/home_repo/school/spring11/cs6530
 pan=/home/mates/sdc/panorama/interactive/src/
+
+pan=/home/mates/sdc/panorama/interactive
 
 #}}}
 
@@ -219,6 +221,8 @@ alias f=finger
 alias ll='ls -al'
 alias ls='ls --color=auto '
 alias =clear
+
+alias cade='ssh mates@lab3-13.eng.utah.edu'
 #}}}
 
 #{{{ Key bindings
@@ -289,7 +293,7 @@ zstyle ':completion:*:processes-names' command 'ps axho command'
 zstyle ':completion:*' hosts $(awk '/^[^#]/ {print $2 $3" "$4" "$5}' /etc/hosts | grep -v ip6- && grep "^#%" /etc/hosts | awk -F% '{print $2}')
 # Filename suffixes to ignore during completion (except after rm command)
 zstyle ':completion:*:*:(^rm):*:*files' ignored-patterns '*?.pyc' '*?.class' '*?.o' '*?.c~' \
-    '*?.old' '*?.pro'
+    '*?.old' '*?.pro' '*?.hi'
 
 # ignore completion functions (until the _ignored completer)
 # Ignore completion functions for commands you don't have

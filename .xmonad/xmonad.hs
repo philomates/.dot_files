@@ -21,6 +21,7 @@ import XMonad.Hooks.InsertPosition
 
 -- layouts
 import XMonad.Layout.NoBorders
+import XMonad.Layout.SimpleFloat
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.Named
 import XMonad.Layout.Tabbed
@@ -58,6 +59,7 @@ manageHook' = composeAll . concat $
      , [ className =? "Gimp"      --> doFloat ]
      , [ className =? "Vlc"       --> doFloat ]
      , [ className =? "Evince"    --> doFloat ]
+     , [ className =? "JUCE"    --> doFloat ]
      , [ isDialog --> doFloat ]
      , [ title =? "Downloads"     --> doFloat ]
      , [ fmap ( c `isInfixOf`) title     --> doFloat | c <- myMatchAnywhereFloatsT ]
@@ -99,7 +101,7 @@ tabTheme1 = defaultTheme { decoHeight = 16
 workspaces' = ["1-main", "2-web", "3-code", "4", "5", "6", "7", "8-todo", "9-audio"]
 
 -- layouts
-layoutHook' = tile ||| mtile ||| tab ||| full
+layoutHook' = tile ||| mtile ||| tab ||| full  ||| simpleFloat
   where
     rt = ResizableTall 1 (2/100) (1/2) []
     tile = named "[]=" $ smartBorders rt
@@ -129,7 +131,7 @@ keys' conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     , ((modMask .|. shiftMask, xK_p     ), spawn "i3lock -c 000000")
     , ((modMask .|. shiftMask, xK_m     ), spawn "claws-mail")
     , ((modMask,               xK_s     ), spawn "firefox")
-    , ((modMask,               xK_d     ), spawn "thunar")
+    , ((modMask,               xK_d     ), spawn "dbus-launch thunar")
     , ((modMask .|. shiftMask, xK_c     ), kill)
 
     -- grid
