@@ -116,13 +116,9 @@ unsetopt ALL_EXPORT
 # Named Directories
 
 # School Dirs
-graph=/home/mates/home_repo/school/spring11/cs5600
-comp=/home/mates/home_repo/school/spring11/cs5470
-ece=/home/mates/home_repo/school/spring11/cs5780
-db=/home/mates/home_repo/school/spring11/cs6530
-pan=/home/mates/sdc/panorama/interactive/src/
-
-pan=/home/mates/sdc/panorama/interactive
+csys=/home/mates/home_repo/school/fall11/cs4400
+algo=/home/mates/home_repo/school/fall11/cs6150
+thesis=/home/mates/home_repo/school/thesis/
 
 #}}}
 
@@ -188,7 +184,7 @@ eval `keychain --eval id_rsa`
 # Query wikipedia
 wiki() { dig +short txt $1.wp.dg.cx;}
 
-alias cade='ssh mates@lab3-13.eng.utah.edu'
+alias cade='ssh mates@lab1-13.eng.utah.edu'
 
 # display top ten running processes sorted by memory usage
 alias tps='ps aux | sort -nk +4 | tail'
@@ -222,7 +218,6 @@ alias ll='ls -al'
 alias ls='ls --color=auto '
 alias =clear
 
-alias cade='ssh mates@lab3-13.eng.utah.edu'
 #}}}
 
 #{{{ Key bindings
