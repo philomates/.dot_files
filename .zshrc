@@ -71,7 +71,7 @@ zmodload -a zsh/zprof zprof
 #}}}
 
 #{{{ Variables
-PATH="/usr/local/sbin/:/bin:/sbin:/usr/bin:/usr/sbin:$PATH"
+PATH="/usr/local/sbin/:/bin:/sbin:/usr/bin:/usr/sbin:/home/mates/.cabal/bin:/home/mates/bin:/opt/android-sdk/platform-tools:/usr/share/java/apache-ant/bin:$PATH"
 GREP_OPTIONS="--exclude-dir=\.svn"
 
 TZ="America/Denver"
@@ -81,7 +81,7 @@ SAVEHIST=10000
 HOSTNAME="`hostname`"
 PAGER='less'
 EDITOR='vim'
-TERMINAL='sakura'
+TERMINAL='uxterm'
 
 autoload -Uz vcs_info
 autoload colors zsh/terminfo
@@ -116,9 +116,7 @@ unsetopt ALL_EXPORT
 # Named Directories
 
 # School Dirs
-csys=/home/mates/home_repo/school/fall11/cs4400
-algo=/home/mates/home_repo/school/fall11/cs6150
-thesis=/home/mates/home_repo/school/thesis/
+oplss=/home/mates/home_repo/school/oplss12/
 
 #}}}
 
@@ -184,7 +182,7 @@ eval `keychain --eval id_rsa`
 # Query wikipedia
 wiki() { dig +short txt $1.wp.dg.cx;}
 
-alias cade='ssh mates@lab1-13.eng.utah.edu'
+alias cade='ssh mates@lab1-14.eng.utah.edu'
 
 # display top ten running processes sorted by memory usage
 alias tps='ps aux | sort -nk +4 | tail'
@@ -195,16 +193,15 @@ alias cp='nocorrect cp -r '
 alias scp='scp -r '
 alias mgrep='grep -A1 -B1 -n --color -r --exclude="*.{swp,pyc}"'
 alias hgrep='history 1 | grep '
-alias pgrep="ps aux|grep "
+alias psgrep="ps aux|grep "
 alias mget='wget --random-wait -r -p -k -e robots=off -U Mozilla -t45 -l0 '
 alias reload="source ~/.zshrc"
 alias rcedit='vim ~/.zshrc'
 alias psme='ps aux|grep `whoami`'
+alias findf='find . -type f -name'
 
 alias mkdir='nocorrect mkdir'
 alias mv='nocorrect mv'
-
-alias ipy=ipython
 
 # du (disk usage) hunman readable, summary, one file system, total
 alias du="du -hsc "
@@ -218,6 +215,8 @@ alias ll='ls -al'
 alias ls='ls --color=auto '
 alias =clear
 
+# git stuffs, weeeee
+alias lg="git log --graph --pretty=format:'%Cred%h%Creset %Cgreen%t%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
 #}}}
 
 #{{{ Key bindings
@@ -315,10 +314,4 @@ zstyle '*' single-ignored show
 
 # cd will never select the parent directory (e.g.: cd ../<TAB>)
 zstyle ':completion:*:cd:*' ignore-parents parent pwd
-#}}}
-
-#{{{ Named directories
-quantis=/home/mates/repo/school/fall10/honors3600/quantis
-vt=/home/mates/vistrails/vistrails
-kindle=/media/Kindle/documents
 #}}}

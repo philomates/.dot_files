@@ -10,7 +10,7 @@ background no
 use_xft yes
 
 # Xft font when Xft is enabled
-xftfont Bitstream Vera Sans Mono-10
+xftfont Bitstream Vera Sans Mono-8
 #xftfont Andale Mono-9
 #xftfont Clean-8
 #xftfont cubicfive10:pixelsize=8
@@ -81,7 +81,7 @@ ${color #ffcb48}$nodename      ${color #828282}$sysname $kernel on $machine
 
 ${color #ffcb48}PROCESSING
    ${color #98c2c7}CPU: ${freq} MHz  $cpu% 
-   ${color #98c2c7}${acpitemp} °C
+   ${color #98c2c7}TEMP: ${acpitemp}C
    ${color #78af78}$cpubar
    ${color #78af78}${cpugraph 78af78 a3a3a3}
 
@@ -106,5 +106,5 @@ ${color #ffcb48}DATA
    ${color #98c2c7}/:       ${fs_free_perc /}%  $fs_free  ${color 
 #78af78}${fs_bar 6 /}
 
-   ${color #98c2c7}Upload: ${upspeed}kb/s${color #98c2c7} 
-   Download: ${downspeed}kb/s
+${offset 10}${color #98c2c7}Up: ${color #e5e5e5}${upspeed wlan0} k/s ${offset 70} ${color #98c2c7}Down: ${color #e5e5e5}${downspeed wlan0} k/s
+${offset 10}${upspeedgraph wlan0 20,130 000000 ffffff} $alignr${downspeedgraph wlan0 20,130 000000 ffffff}
