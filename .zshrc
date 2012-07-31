@@ -71,7 +71,7 @@ zmodload -a zsh/zprof zprof
 #}}}
 
 #{{{ Variables
-PATH="/usr/local/sbin/:/bin:/sbin:/usr/bin:/usr/sbin:/home/mates/.cabal/bin:/home/mates/bin:/opt/android-sdk/platform-tools:/usr/share/java/apache-ant/bin:$PATH"
+PATH="/usr/local/sbin/:/bin:/sbin:/usr/bin:/usr/sbin:/home/mates/.cabal/bin:/home/mates/bin:/opt/android-sdk/tools:/opt/android-sdk/platform-tools:/usr/share/java/apache-ant/bin:$PATH"
 GREP_OPTIONS="--exclude-dir=\.svn"
 
 TZ="America/Denver"
