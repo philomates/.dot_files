@@ -74,7 +74,7 @@ zmodload -a zsh/zprof zprof
 PATH="/usr/local/sbin/:/bin:/sbin:/usr/bin:/usr/sbin:/home/mates/.cabal/bin:/home/mates/bin:/opt/android-sdk/tools:/opt/android-sdk/platform-tools:/usr/share/java/apache-ant/bin:$PATH"
 GREP_OPTIONS="--exclude-dir=\.svn"
 
-TZ="America/Denver"
+TZ="EST5EDT"
 HISTFILE=$HOME/.zhistory
 HISTSIZE=10000
 SAVEHIST=10000
@@ -117,6 +117,8 @@ unsetopt ALL_EXPORT
 
 # School Dirs
 oplss=/home/mates/home_repo/school/oplss12/
+seme=/home/mates/home_repo/school/grad/fall12/
+ppl=/home/mates/home_repo/school/grad/fall12/ppl
 
 #}}}
 
@@ -183,6 +185,7 @@ eval `keychain --eval id_rsa`
 wiki() { dig +short txt $1.wp.dg.cx;}
 
 alias cade='ssh mates@lab1-14.eng.utah.edu'
+alias ccs='ssh mates@login.ccs.neu.edu'
 
 # display top ten running processes sorted by memory usage
 alias tps='ps aux | sort -nk +4 | tail'
@@ -193,11 +196,11 @@ alias cp='nocorrect cp -r '
 alias scp='scp -r '
 alias mgrep='grep -A1 -B1 -n --color -r --exclude="*.{swp,pyc}"'
 alias hgrep='history 1 | grep '
-alias psgrep="ps aux|grep "
+alias psgrep="ps aux | grep "
 alias mget='wget --random-wait -r -p -k -e robots=off -U Mozilla -t45 -l0 '
 alias reload="source ~/.zshrc"
 alias rcedit='vim ~/.zshrc'
-alias psme='ps aux|grep `whoami`'
+alias psme='ps aux | grep `whoami`'
 alias findf='find . -type f -name'
 
 alias mkdir='nocorrect mkdir'
@@ -234,8 +237,9 @@ bindkey '^I' complete-word # complete on tab, leave expansion to _expand
 #}}}
 
 #{{{ Completion Stuff
-zstyle ':completion::complete:*' use-cache on
-zstyle ':completion::complete:*' cache-path ~/.zsh/cache/$HOST
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' hosts off
+zstyle ':completion:*' cache-path ~/.zsh/cache/$HOST
 
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*' list-prompt '%SAt %p: Hit TAB for more, or the character to insert%s'
@@ -243,6 +247,7 @@ zstyle ':completion:*' menu select=1 _complete _ignored _approximate
 zstyle -e ':completion:*:approximate:*' max-errors \
     'reply=( $(( ($#PREFIX+$#SUFFIX)/2 )) numeric )'
 zstyle ':completion:*' select-prompt '%SScrolling active: current selection at %p%s'
+zstyle ':completion:*' accept-exact '*(N)'
 
 # Completion Styles
 
@@ -280,11 +285,6 @@ zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:*:kill:*:processes' command 'ps --forest -A -o pid,user,cmd'
 zstyle ':completion:*:processes-names' command 'ps axho command'
 #
-#NEW completion:
-# 1. All /etc/hosts hostnames are in autocomplete
-# 2. If you have a comment in /etc/hosts like #%foobar.domain,
-#    then foobar.domain will show up in autocomplete!
-zstyle ':completion:*' hosts $(awk '/^[^#]/ {print $2 $3" "$4" "$5}' /etc/hosts | grep -v ip6- && grep "^#%" /etc/hosts | awk -F% '{print $2}')
 # Filename suffixes to ignore during completion (except after rm command)
 zstyle ':completion:*:*:(^rm):*:*files' ignored-patterns '*?.pyc' '*?.class' '*?.o' '*?.c~' \
     '*?.old' '*?.pro' '*?.hi'
