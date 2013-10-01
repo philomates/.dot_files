@@ -117,7 +117,9 @@ unsetopt ALL_EXPORT
 
 # School Dirs
 oplss=/home/mates/home_repo/school/oplss12/
-seme=/home/mates/home_repo/school/grad/fall12/
+seme=/home/mates/home_repo/school/grad/fall13/
+summer=/home/mates/home_repo/school/grad/summer13/
+lr=/home/mates/home_repo/school/grad/fall12/logical_relations/
 ppl=/home/mates/home_repo/school/grad/fall12/ppl
 
 #}}}
@@ -164,6 +166,40 @@ extract () {
    fi
 }
 
+print_ccs_single () {
+  # assume second arg is page range: e.g. 11-14
+ if [ $# -eq 2 ] ; then
+   pages="-o page-ranges=$2"
+ else pages=""
+ fi
+ if [ -f $1 ] ; then
+     case $1 in
+            *.pdf) scp $1 login.ccs.neu.edu:~/to_print/
+                   ssh mates@login.ccs.neu.edu "cd to_print; lpr -Pgaugin $1 $pages";;
+            *)           echo "'$1' cannot be printed via lpr" ;;
+    esac
+ else
+     echo "'$1' is not a valid file"
+ fi
+}
+
+print_ccs () {
+  # assume second arg is page range: e.g. 11-14
+ if [ $# -eq 2 ] ; then
+   pages="-o page-ranges=$2"
+ else pages=""
+ fi
+ if [ -f $1 ] ; then
+     case $1 in
+            *.pdf) scp $1 login.ccs.neu.edu:~/to_print/
+                   ssh mates@login.ccs.neu.edu "cd to_print; lpr -Pgaugin-duplex '$1' $pages";;
+            *)           echo "'$1' cannot be printed via lpr" ;;
+    esac
+ else
+     echo "'$1' is not a valid file"
+ fi
+}
+
 # Another method for quick change directories. Add this to your ~/.zshrc, then just enter “cd ..../dir”
 rationalise-dot() {
   if [[ $LBUFFER = *.. ]]; then
@@ -192,6 +228,7 @@ alias tps='ps aux | sort -nk +4 | tail'
 
 alias install='sudo pacman -S '
 alias search='sudo pacman -Ss'
+alias update='sudo pacman -Syu'
 alias cp='nocorrect cp -r '
 alias scp='scp -r '
 alias mgrep='grep -A1 -B1 -n --color -r --exclude="*.{swp,pyc}"'
