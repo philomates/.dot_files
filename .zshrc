@@ -116,11 +116,10 @@ unsetopt ALL_EXPORT
 # Named Directories
 
 # School Dirs
-oplss=/home/mates/home_repo/school/oplss12/
-seme=/home/mates/home_repo/school/grad/fall13/
-summer=/home/mates/home_repo/school/grad/summer13/
-lr=/home/mates/home_repo/school/grad/fall12/logical_relations/
-ppl=/home/mates/home_repo/school/grad/fall12/ppl
+seme=/home/mates/home_repo/school/grad/spring14/
+theory=/home/mates/home_repo/school/grad/spring14/theory/
+paps=/home/mates/home_repo/school/grad/papers/
+notes=/home/mates/home_repo/school/grad/notebook/
 
 #}}}
 
@@ -211,7 +210,7 @@ rationalise-dot() {
 zle -N rationalise-dot
 bindkey . rationalise-dot
 
-eval `keychain --eval id_rsa`
+eval `keychain --eval id_rsa mates_fundies`
 
 #}}}
 
@@ -220,11 +219,12 @@ eval `keychain --eval id_rsa`
 # Query wikipedia
 wiki() { dig +short txt $1.wp.dg.cx;}
 
-alias cade='ssh mates@lab1-14.eng.utah.edu'
 alias ccs='ssh mates@login.ccs.neu.edu'
 
 # display top ten running processes sorted by memory usage
 alias tps='ps aux | sort -nk +4 | tail'
+
+alias tmux='tmux -2'
 
 alias install='sudo pacman -S '
 alias search='sudo pacman -Ss'
@@ -260,6 +260,7 @@ alias lg="git log --graph --pretty=format:'%Cred%h%Creset %Cgreen%t%Creset -%C(y
 #}}}
 
 #{{{ Key bindings
+bindkey '\e.' insert-last-word
 bindkey "^[[3~" delete-char
 bindkey "^[3;5~" delete-char
 bindkey ";5D" backward-word
@@ -323,7 +324,7 @@ zstyle ':completion:*:*:kill:*:processes' command 'ps --forest -A -o pid,user,cm
 zstyle ':completion:*:processes-names' command 'ps axho command'
 #
 # Filename suffixes to ignore during completion (except after rm command)
-zstyle ':completion:*:*:(^rm):*:*files' ignored-patterns '*?.pyc' '*?.class' '*?.o' '*?.c~' \
+zstyle ':completion:*:*:(^rm):*:*files' ignored-patterns '*?.log' '*?.aux' '*?.pyc' '*?.class' '*?.o' '*?.c~' \
     '*?.old' '*?.pro' '*?.hi'
 
 # ignore completion functions (until the _ignored completer)

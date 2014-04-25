@@ -1,8 +1,8 @@
-conky &
 xset -b &
-xset +fp /usr/share/fonts/local
+# xset +fp /usr/share/fonts/local
 xset fp rehash
 xbindkeys &
-sh /home/mates/home_repo/scripts/low_battery.sh &
-sh /home/mates/home_repo/scripts/trackpad-toggle.sh &
-exec ck-launch-session dbus-launch awesome
+xrandr --output DisplayPort-0 --auto --rotate left --output DVI-0 --auto --rotate left --left-of DisplayPort-0 &
+conky &
+nitrogen --restore &
+exec dbus-launch awesome
