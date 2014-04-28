@@ -210,7 +210,7 @@ rationalise-dot() {
 zle -N rationalise-dot
 bindkey . rationalise-dot
 
-eval `keychain --eval id_rsa mates_fundies`
+eval `keychain --eval id_rsa`
 
 #}}}
 
