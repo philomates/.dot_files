@@ -6,6 +6,8 @@ ln -s ~/.dot_files/.xmobarrc ~/.xmobarrc
 ln -s ~/.dot_files/.conkyrc ~/.conkyrc
 ln -s ~/.dot_files/.pylintrc ~/.pylintrc
 ln -s ~/.dot_files/.xinitrc ~/.xinitrc
+ln -s ~/.dot_files/.config/.awesome/rc.lua ~/.config/awesome/rc.lua
+ln -s ~/.dot_files/.config/.awesome/theme.lua ~/.config/awesome/theme.lua
 
 mkdir -p ~/.xmonad
 ln -s ~/.dot_files/.xmonad/xmonad.hs ~/.xmonad/xmonad.hs
