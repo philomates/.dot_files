@@ -1,4 +1,5 @@
 servers = (
+  { address = "localhost"; chatnet = "bip"; port = "7778"; },
   { address = "eu.irc6.net"; chatnet = "IRCnet"; port = "6667"; },
   { address = "open.ircnet.net"; chatnet = "IRCnet"; port = "6667"; },
   { address = "irc.efnet.org"; chatnet = "EFNet"; port = "6667"; },

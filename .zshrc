@@ -71,10 +71,12 @@ zmodload -a zsh/zprof zprof
 #}}}
 
 #{{{ Variables
-PATH="/usr/local/sbin/:/bin:/sbin:/usr/bin:/usr/sbin:/home/mates/.cabal/bin:/home/mates/bin:/opt/android-sdk/tools:/opt/android-sdk/platform-tools:/usr/share/java/apache-ant/bin:$PATH"
+PATH="/usr/local/sbin/:/bin:/sbin:/usr/bin:/usr/sbin:/home/mates/.cabal/bin:/home/mates/bin:/opt/android-sdk/tools:/opt/android-sdk/platform-tools:/usr/share/java/apache-ant/bin:/home/mates/.npm/bin:$PATH"
 GREP_OPTIONS="--exclude-dir=\.svn"
 
-TZ="EST5EDT"
+# TZ="EST5EDT"
+# TZ="CEST"
+GOPATH="$HOME/gocode/3rdparty:$HOME/gocode/own"
 HISTFILE=$HOME/.zhistory
 HISTSIZE=10000
 SAVEHIST=10000
@@ -82,6 +84,8 @@ HOSTNAME="`hostname`"
 PAGER='less'
 EDITOR='vim'
 TERMINAL='uxterm'
+LD_LIBRARY_PATH="/usr/local/lib:$LD_LIBRARY_PATH"
+CLASSPATH="/usr/share/java/junit.jar:$CLASSPATH"
 
 autoload -Uz vcs_info
 autoload colors zsh/terminfo
@@ -114,12 +118,7 @@ LC_CTYPE=C
 unsetopt ALL_EXPORT
 
 # Named Directories
-
-# School Dirs
-seme=/home/mates/home_repo/school/grad/spring14/
-theory=/home/mates/home_repo/school/grad/spring14/theory/
-paps=/home/mates/home_repo/school/grad/papers/
-notes=/home/mates/home_repo/school/grad/notebook/
+# paps=/home/mates/home_repo/school/grad/papers/
 
 #}}}
 
