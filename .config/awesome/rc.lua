@@ -1,6 +1,8 @@
 -- Standard awesome library
 local gears = require("gears")
 local awful = require("awful")
+local vicious = require("vicious")
+
 awful.rules = require("awful.rules")
 require("awful.autofocus")
 -- Widget and layout library
@@ -38,7 +40,7 @@ end
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, and wallpapers
-beautiful.init("/usr/share/awesome/themes/default/theme.lua")
+beautiful.init("/home/mates/.config/awesome/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "uxterm -fg white -bg black"
@@ -111,6 +113,33 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- {{{ Wibox
 -- Create a textclock widget
 mytextclock = awful.widget.textclock()
+battwidget = wibox.widget.textbox()
+vicious.register(battwidget, vicious.widgets.bat,
+  function(widget, args)
+    if args[1] == "+"
+      then arrow = '↑'
+      else arrow = '↓'
+    end
+    if args[2] < 25
+      then percent = '<span color="#FF3300">'..args[2]..'</span>'
+      else if args[2] > 79
+        then percent = '<span color="#66CC00">'..args[2]..'</span>'
+        else percent = '<span color="#cccccc">'..args[2]..'</span>'
+        end
+    end
+    return arrow..percent..'<span color="#cccccc"> |</span>'
+  end, 61, 'BAT0')
+
+-- Volume widget
+volwidget = wibox.widget.textbox()
+vicious.register(volwidget, vicious.widgets.volume, 
+  function(widget, args)
+    if args[2] == '♫'
+      then text = '<span color="#CCCCCC">'..args[2]..args[1]..'</span> '
+      else text = '<span color="#FF33FF"> '..args[2]..args[1]..'</span> '
+      end
+    return text
+  end, 2, "Master")
 
 -- Create a wibox for each screen and add it
 mywibox = {}
@@ -182,13 +211,15 @@ for s = 1, screen.count() do
 
     -- Widgets that are aligned to the left
     local left_layout = wibox.layout.fixed.horizontal()
-    left_layout:add(mylauncher)
+    -- left_layout:add(mylauncher)
     left_layout:add(mytaglist[s])
     left_layout:add(mypromptbox[s])
 
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
     if s == 1 then right_layout:add(wibox.widget.systray()) end
+    right_layout:add(volwidget)
+    right_layout:add(battwidget)
     right_layout:add(mytextclock)
     right_layout:add(mylayoutbox[s])
 
@@ -261,7 +292,8 @@ globalkeys = awful.util.table.join(
     -- Custom
     awful.key({ }, "Print", function () awful.util.spawn("scrot -e 'mv $f ~/screenshots/ 2>/dev/null'") end),
     awful.key({ modkey,           }, "t",     function () awful.util.spawn("dbus-launch thunar") end),
-    awful.key({ modkey,           }, "s",     function () awful.util.spawn("firefox") end),
+    awful.key({ modkey,           }, "s",     function () awful.util.spawn("apulse32 skype") end),
+    awful.key({ modkey,           }, "a",     function () awful.util.spawn("android-studio") end),
     awful.key({ modkey, "Shift"   }, "t",     function () awful.util.spawn("mupdf /home/mates/repos/closconv-ref/tr.pdf") end),
     awful.key({ modkey,           }, "g",     function () awful.util.spawn("i3lock -c 000000") end),
     awful.key({ modkey,           }, "c",     function () awful.util.spawn("chromium") end),
@@ -450,3 +482,4 @@ end)
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
+
