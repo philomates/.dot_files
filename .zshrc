@@ -72,10 +72,9 @@ zmodload -a zsh/zprof zprof
 
 #{{{ Variables
 PATH="/usr/local/sbin/:/bin:/sbin:/usr/bin:/usr/sbin:/home/mates/.cabal/bin:/home/mates/bin:/opt/android-sdk/tools:/opt/android-sdk/platform-tools:/usr/share/java/apache-ant/bin:/home/mates/.npm/bin:$PATH"
-GREP_OPTIONS="--exclude-dir=\.svn"
 
-# TZ="EST5EDT"
-# TZ="CEST"
+TZ="EST5EDT"
+# TZ="EDT"
 GOPATH="$HOME/gocode/3rdparty:$HOME/gocode/own"
 HISTFILE=$HOME/.zhistory
 HISTSIZE=10000
@@ -86,6 +85,7 @@ EDITOR='vim'
 TERMINAL='uxterm'
 LD_LIBRARY_PATH="/usr/local/lib:$LD_LIBRARY_PATH"
 CLASSPATH="/usr/share/java/junit.jar:$CLASSPATH"
+QT_GRAPHICSSYSTEM=native
 
 autoload -Uz vcs_info
 autoload colors zsh/terminfo
@@ -115,6 +115,10 @@ LC_ALL='en_US.UTF-8'
 LANG='en_US.UTF-8'
 LC_CTYPE=C
 
+# Setting ag as the default source for fzf
+export FZF_DEFAULT_COMMAND='ag -l -g ""'
+source /etc/profile.d/fzf.zsh
+
 unsetopt ALL_EXPORT
 
 # Named Directories
@@ -139,8 +143,7 @@ function svndiff () { svn diff $@ | colordiff | less -R; }
 function gitdiff () { git diff $@ | colordiff | less -R; }
 
 #Quickly tar a dif or file
-function qtar
-{
+function qtar {
   tar czf ./$1.tgz $1
 }
 
@@ -209,7 +212,23 @@ rationalise-dot() {
 zle -N rationalise-dot
 bindkey . rationalise-dot
 
-eval `keychain --eval id_rsa`
+eval `keychain --eval id_rsa id_dimagi`
+
+# fd - cd to selected directory
+fd() {
+  local dir
+  dir=$(find ${1:-*} -path '*/\.*' -prune \
+                  -o -type d -print 2> /dev/null | fzf +m) &&
+  cd "$dir"
+}
+
+# fbr - checkout git branch
+fbr() {
+  local branches branch
+  branches=$(git branch) &&
+  branch=$(echo "$branches" | fzf +m) &&
+  git checkout $(echo "$branch" | sed "s/.* //")
+}
 
 #}}}
 
@@ -231,8 +250,8 @@ alias update='sudo pacman -Syu'
 alias cp='nocorrect cp -r '
 alias scp='scp -r '
 alias mgrep='grep -A1 -B1 -n --color -r --exclude="*.{swp,pyc}"'
-alias hgrep='history 1 | grep '
-alias psgrep="ps aux | grep "
+alias hgrep='history 1 | ag '
+alias psgrep="ps aux | ag "
 alias mget='wget --random-wait -r -p -k -e robots=off -U Mozilla -t45 -l0 '
 alias reload="source ~/.zshrc"
 alias rcedit='vim ~/.zshrc'
@@ -256,10 +275,30 @@ alias =clear
 
 # git stuffs, weeeee
 alias lg="git log --graph --pretty=format:'%Cred%h%Creset %Cgreen%t%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
+alias lgn="git log --name-only"
+alias gp="git pull"
+alias gst="git status ."
+alias gd="git diff ."
+alias gdc="git diff --cached ."
+alias gpu="git push origin"
+alias ga="git add -u"
+alias gc="git commit"
+alias gcm="git checkout master"
+alias cdm="cd ~/dimagi"
+alias cdc="cd ~cc"
+alias cdo="cd ~odk"
+alias cdj="cd ~jr"
+
+jr=~/dimagi/javarosa
+odk=~/dimagi/commcare-odk
+cc=~/dimagi/commcare
+hq=~/web/commcare-hq
+tf=~/web/commcare-hq/submodules/touchforms-src/touchforms
 #}}}
 
 #{{{ Key bindings
 bindkey '\e.' insert-last-word
+bindkey '®' insert-last-word
 bindkey "^[[3~" delete-char
 bindkey "^[3;5~" delete-char
 bindkey ";5D" backward-word
@@ -268,7 +307,7 @@ bindkey '^[OH' beginning-of-line
 bindkey '^[OF' end-of-line
 bindkey '^[[5~' up-line-or-history
 bindkey '^[[6~' down-line-or-history
-bindkey "^r" history-incremental-search-backward
+#bindkey "^r" history-incremental-search-backward
 bindkey ' ' magic-space    # also do history expansion on space
 bindkey '^I' complete-word # complete on tab, leave expansion to _expand
 #}}}

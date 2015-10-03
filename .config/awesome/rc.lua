@@ -43,7 +43,8 @@ end
 beautiful.init("/home/mates/.config/awesome/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "uxterm -fg white -bg black"
+-- terminal = "uxterm -fg white -bg black -fs 8"
+terminal = "terminator"
 editor = os.getenv("EDITOR") or "vim"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -72,21 +73,16 @@ local layouts =
 }
 -- }}}
 
--- {{{ Wallpaper
-if beautiful.wallpaper then
-    for s = 1, screen.count() do
-        gears.wallpaper.maximized(beautiful.wallpaper, s, true)
-    end
-end
--- }}}
-
 -- {{{ Tags
 -- Define a tag table which hold all screen tags.
 tags = {}
+last_screen = 0
 for s = 1, screen.count() do
     -- Each screen has its own tag table.
-    tags[s] = awful.tag({ 1, 2, 3, 4, 5, 6, 7, 8, 9 }, s, layouts[1])
+      tags[s] = awful.tag({ 1, 2, 3, 4, 5, 6, 7, 8, 9 }, s, layouts[2])
+      last_screen = s
 end
+awful.layout.set(layouts[4], tags[1][8])
 -- }}}
 
 -- {{{ Menu
@@ -113,8 +109,8 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- {{{ Wibox
 -- Create a textclock widget
 mytextclock = awful.widget.textclock()
-battwidget = wibox.widget.textbox()
-vicious.register(battwidget, vicious.widgets.bat,
+battwidget0 = wibox.widget.textbox()
+vicious.register(battwidget0, vicious.widgets.bat,
   function(widget, args)
     if args[1] == "+"
       then arrow = '↑'
@@ -127,8 +123,24 @@ vicious.register(battwidget, vicious.widgets.bat,
         else percent = '<span color="#cccccc">'..args[2]..'</span>'
         end
     end
-    return arrow..percent..'<span color="#cccccc"> |</span>'
+    return arrow..percent..'<span color="#cccccc">:</span>'
   end, 61, 'BAT0')
+battwidget1 = wibox.widget.textbox()
+vicious.register(battwidget1, vicious.widgets.bat,
+  function(widget, args)
+    if args[1] == "+"
+      then arrow = '↑'
+      else arrow = '↓'
+    end
+    if args[2] < 25
+      then percent = '<span color="#FF3300">'..args[2]..'</span>'
+      else if args[2] > 79
+        then percent = '<span color="#66CC00">'..args[2]..'</span>'
+        else percent = '<span color="#cccccc">'..args[2]..'</span>'
+        end
+    end
+    return percent..arrow..'<span color="#cccccc"> |</span>'
+  end, 61, 'BAT1')
 
 -- Volume widget
 volwidget = wibox.widget.textbox()
@@ -219,7 +231,8 @@ for s = 1, screen.count() do
     local right_layout = wibox.layout.fixed.horizontal()
     if s == 1 then right_layout:add(wibox.widget.systray()) end
     right_layout:add(volwidget)
-    right_layout:add(battwidget)
+    right_layout:add(battwidget0)
+    right_layout:add(battwidget1)
     right_layout:add(mytextclock)
     right_layout:add(mylayoutbox[s])
 
@@ -257,7 +270,6 @@ globalkeys = awful.util.table.join(
             awful.client.focus.byidx(-1)
             if client.focus then client.focus:raise() end
         end),
-    awful.key({ modkey,           }, "w", function () mymainmenu:show() end),
 
     -- Layout manipulation
     awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1)    end),
@@ -292,12 +304,22 @@ globalkeys = awful.util.table.join(
     -- Custom
     awful.key({ }, "Print", function () awful.util.spawn("scrot -e 'mv $f ~/screenshots/ 2>/dev/null'") end),
     awful.key({ modkey,           }, "t",     function () awful.util.spawn("dbus-launch thunar") end),
-    awful.key({ modkey,           }, "s",     function () awful.util.spawn("apulse32 skype") end),
+    awful.key({ modkey,           }, "s",     function () awful.util.spawn("skype") awful.util.spawn("slack") end),
     awful.key({ modkey,           }, "a",     function () awful.util.spawn("android-studio") end),
-    awful.key({ modkey, "Shift"   }, "t",     function () awful.util.spawn("mupdf /home/mates/repos/closconv-ref/tr.pdf") end),
-    awful.key({ modkey,           }, "g",     function () awful.util.spawn("i3lock -c 000000") end),
+    awful.key({ modkey,           }, "g",     function () awful.util.spawn("sh /home/mates/home_repo/scripts/suspend_and_lock.sh") end),
+    awful.key({ modkey,           }, "x",     function () awful.util.spawn("keepassx /home/mates/home_repo/kyz.kdb") end),
+    awful.key({ modkey, "Shift"   }, "x",     function () awful.util.spawn('keepassx "/home/mates/Dropbox (Dimagi)/Dimagi - Dev/Internal/dimagi_shared.kdb"') end),
     awful.key({ modkey,           }, "c",     function () awful.util.spawn("chromium") end),
     awful.key({ modkey,           }, "e",     function () awful.util.spawn("evince") end),
+    awful.key({ modkey,           }, "w", function () awful.util.spawn('nitrogen') end),
+
+    awful.key({ modkey,           }, "F2",     function () awful.util.spawn("amixer set Master 2%- unmute") end),
+    awful.key({ modkey,           }, "F3",     function () awful.util.spawn("amixer set Master 2%+ unmute") end),
+    awful.key({ modkey,           }, "F5",     function () awful.util.spawn("xbacklight -dec 10") end),
+    awful.key({ modkey,           }, "F6",     function () awful.util.spawn("xbacklight -inc 10") end),
+    awful.key({ modkey,           }, "F7",     function () awful.util.spawn("sh /home/mates/home_repo/scripts/darken_screen.sh") end),
+    awful.key({ modkey,           }, "F12",    function () awful.util.spawn("sh /home/mates/home_repo/scripts/toggleDual.sh &") end),
+
 
     -- Audio
     awful.key({ modkey, "Shift"   }, "b",     function ()
@@ -310,17 +332,7 @@ globalkeys = awful.util.table.join(
                                               end),
 
     -- Prompt
-    awful.key({ modkey },            "r",     function () mypromptbox[mouse.screen]:run() end),
-
-    awful.key({ modkey }, "x",
-              function ()
-                  awful.prompt.run({ prompt = "Run Lua code: " },
-                  mypromptbox[mouse.screen].widget,
-                  awful.util.eval, nil,
-                  awful.util.getdir("cache") .. "/history_eval")
-              end),
-    -- Menubar
-    awful.key({ modkey }, "p", function() menubar.show() end)
+    awful.key({ modkey },            "r",     function () mypromptbox[mouse.screen]:run() end)
 )
 
 clientkeys = awful.util.table.join(
@@ -398,6 +410,14 @@ awful.rules.rules = {
                      focus = awful.client.focus.filter,
                      keys = clientkeys,
                      buttons = clientbuttons } },
+    { rule = { class = "Skype" },
+      properties = { tag = tags[last_screen][8] } },
+    { rule = { class = "Slack" },
+      properties = { tag = tags[last_screen][7] } },
+    { rule = { class = "Keepassx" },
+      properties = { tag = tags[last_screen][9] } },
+    { rule = { class = "jetbrains-studio" },
+      properties = { tag = tags[1][2] } },
     { rule = { class = "MPlayer" },
       properties = { floating = true } },
     { rule = { class = "pinentry" },

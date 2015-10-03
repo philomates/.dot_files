@@ -1,8 +1,15 @@
+conky &
 xset -b &
-# xset +fp /usr/share/fonts/local
 xset fp rehash
 xbindkeys &
-xrandr --output DisplayPort-0 --auto --rotate left --output DVI-0 --auto --rotate left --left-of DisplayPort-0 &
-conky &
 nitrogen --restore &
+nm-applet &
+sh /home/mates/home_repo/scripts/trackpad-toggle.sh &
+xinput set-prop "TPPS/2 IBM TrackPoint" "Device Accel Constant Deceleration" 0.45
+
+TOUCHSCREEN_ID=`xinput list | grep Touchscreen | awk '/id=/{ print $5 }' | awk -F= '{ print $2 }'`
+xinput disable $TOUCHSCREEN_ID
+
+setxkbmap -option ctrl:nocaps
+
 exec dbus-launch awesome
