@@ -71,7 +71,7 @@ zmodload -a zsh/zprof zprof
 #}}}
 
 #{{{ Variables
-PATH="/usr/local/sbin/:/bin:/sbin:/usr/bin:/usr/sbin:/home/mates/.cabal/bin:/home/mates/bin:/opt/android-sdk/tools:/opt/android-sdk/platform-tools:/usr/share/java/apache-ant/bin:/home/mates/.npm/bin:$PATH"
+PATH="/usr/local/sbin/:/bin:/sbin:/usr/bin:/usr/sbin:/home/mates/.cabal/bin:/home/mates/bin:/opt/android-sdk/tools:/opt/android-sdk/platform-tools:/usr/share/java/apache-ant/bin:/home/mates/.npm/bin:/home/mates/.gem/ruby/2.3.0/bin:/home/mates/dimagi/commcare-android/scripts/:$PATH"
 
 TZ="EST5EDT"
 # TZ="EDT"
@@ -86,6 +86,7 @@ TERMINAL='uxterm'
 LD_LIBRARY_PATH="/usr/local/lib:$LD_LIBRARY_PATH"
 CLASSPATH="/usr/share/java/junit.jar:$CLASSPATH"
 QT_GRAPHICSSYSTEM=native
+JAVA8_HOME=/usr/lib/jvm/java-8-openjdk/bin/java
 
 autoload -Uz vcs_info
 autoload colors zsh/terminfo
@@ -117,7 +118,6 @@ LC_CTYPE=C
 
 # Setting ag as the default source for fzf
 export FZF_DEFAULT_COMMAND='ag -l -g ""'
-source /etc/profile.d/fzf.zsh
 
 unsetopt ALL_EXPORT
 
@@ -167,38 +167,22 @@ extract () {
    fi
 }
 
-print_ccs_single () {
-  # assume second arg is page range: e.g. 11-14
- if [ $# -eq 2 ] ; then
-   pages="-o page-ranges=$2"
- else pages=""
- fi
- if [ -f $1 ] ; then
-     case $1 in
-            *.pdf) scp $1 login.ccs.neu.edu:~/to_print/
-                   ssh mates@login.ccs.neu.edu "cd to_print; lpr -Pgaugin $1 $pages";;
-            *)           echo "'$1' cannot be printed via lpr" ;;
-    esac
- else
-     echo "'$1' is not a valid file"
- fi
+pccz () {
+  ccz=`ls *.ccz | sed -n 1p`
+  rm -i *.ccz
+  zip -r $ccz *
 }
 
-print_ccs () {
-  # assume second arg is page range: e.g. 11-14
- if [ $# -eq 2 ] ; then
-   pages="-o page-ranges=$2"
- else pages=""
- fi
- if [ -f $1 ] ; then
-     case $1 in
-            *.pdf) scp $1 login.ccs.neu.edu:~/to_print/
-                   ssh mates@login.ccs.neu.edu "cd to_print; lpr -Pgaugin-duplex '$1' $pages";;
-            *)           echo "'$1' cannot be printed via lpr" ;;
-    esac
- else
-     echo "'$1' is not a valid file"
- fi
+occz () {
+   if [ -f $1 ] ; then
+     dir=`mktemp -d` 
+     echo $dir
+     mv $1 $dir
+     cd $dir
+     unzip *.ccz
+   else
+       echo "'$1' is not a valid file"
+   fi
 }
 
 # Another method for quick change directories. Add this to your ~/.zshrc, then just enter “cd ..../dir”
@@ -255,6 +239,7 @@ alias psgrep="ps aux | ag "
 alias mget='wget --random-wait -r -p -k -e robots=off -U Mozilla -t45 -l0 '
 alias reload="source ~/.zshrc"
 alias rcedit='vim ~/.zshrc'
+alias nvim='nvim -u ~/.vimrc'
 alias psme='ps aux | grep `whoami`'
 alias findf='find . -type f -name'
 
@@ -281,19 +266,31 @@ alias gst="git status ."
 alias gd="git diff ."
 alias gdc="git diff --cached ."
 alias gpu="git push origin"
+alias grp="git push -u origin HEAD"
+alias gcb="git co -b "
+alias gco="git co "
 alias ga="git add -u"
 alias gc="git commit"
+alias gca="git commit --amend"
 alias gcm="git checkout master"
+alias lb="git for-each-ref --sort=-committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'"
 alias cdm="cd ~/dimagi"
 alias cdc="cd ~cc"
-alias cdo="cd ~odk"
-alias cdj="cd ~jr"
+alias cdo="cd ~and"
+alias cdb="cd ~calabash"
+alias cda="cd ~api"
+alias cdd="cd ~deploy"
+alias cdj="cd ~j2me"
 
-jr=~/dimagi/javarosa
-odk=~/dimagi/commcare-odk
-cc=~/dimagi/commcare
+j2me=~/dimagi/commcare-j2me
+and=~/dimagi/commcare-android
+calabash=~/dimagi/commcare-ui-tests
+api=~/dimagi/commcare-hq-api
+deploy=~/dimagi/mobile-deploy
+cc=~/dimagi/commcare-core
 hq=~/web/commcare-hq
 tf=~/web/commcare-hq/submodules/touchforms-src/touchforms
+clj=~/programming/clojure
 #}}}
 
 #{{{ Key bindings
@@ -307,7 +304,7 @@ bindkey '^[OH' beginning-of-line
 bindkey '^[OF' end-of-line
 bindkey '^[[5~' up-line-or-history
 bindkey '^[[6~' down-line-or-history
-#bindkey "^r" history-incremental-search-backward
+bindkey "^r" history-incremental-search-backward
 bindkey ' ' magic-space    # also do history expansion on space
 bindkey '^I' complete-word # complete on tab, leave expansion to _expand
 #}}}
@@ -391,3 +388,5 @@ zstyle '*' single-ignored show
 # cd will never select the parent directory (e.g.: cd ../<TAB>)
 zstyle ':completion:*:cd:*' ignore-parents parent pwd
 #}}}
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

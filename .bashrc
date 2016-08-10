@@ -211,3 +211,5 @@ export GREP_OPTIONS
 if [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
 fi
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash

@@ -307,11 +307,11 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "s",     function () awful.util.spawn("skype") awful.util.spawn("slack") end),
     awful.key({ modkey,           }, "a",     function () awful.util.spawn("android-studio") end),
     awful.key({ modkey,           }, "g",     function () awful.util.spawn("sh /home/mates/home_repo/scripts/suspend_and_lock.sh") end),
-    awful.key({ modkey,           }, "x",     function () awful.util.spawn("keepassx /home/mates/home_repo/kyz.kdb") end),
-    awful.key({ modkey, "Shift"   }, "x",     function () awful.util.spawn('keepassx "/home/mates/Dropbox (Dimagi)/Dimagi - Dev/Internal/dimagi_shared.kdb"') end),
+    awful.key({ modkey,           }, "x",     function () awful.util.spawn("keepassx2 /home/mates/home_repo/kyz.kdb") end),
     awful.key({ modkey,           }, "c",     function () awful.util.spawn("chromium") end),
+    awful.key({ modkey, "Shift"   }, "m",     function () awful.util.spawn(terminal .. " --title cmus -e cmus") end),
     awful.key({ modkey,           }, "e",     function () awful.util.spawn("evince") end),
-    awful.key({ modkey,           }, "w", function () awful.util.spawn('nitrogen') end),
+    awful.key({ modkey,           }, "w",     function () awful.util.spawn('sh /home/mates/home_repo/scripts/random_wallpaper.sh') end),
 
     awful.key({ modkey,           }, "F2",     function () awful.util.spawn("amixer set Master 2%- unmute") end),
     awful.key({ modkey,           }, "F3",     function () awful.util.spawn("amixer set Master 2%+ unmute") end),
@@ -324,11 +324,11 @@ globalkeys = awful.util.table.join(
     -- Audio
     awful.key({ modkey, "Shift"   }, "b",     function ()
                                                 awful.util.spawn("cmus-remote -n", false)
-                                                awful.util.spawn_with_shell('notify-send "cmus : $(cmus-remote -Q | grep \'tag artist\' | cut -d\' \' -f3-) - $(cmus-remote -Q | grep  \'tag title\' | cut -d\' \' -f3-)"', false)
+                                                awful.util.spawn_with_shell('notify-send "cmus : $(cmus-remote -Q | grep -a \'tag artist\' | cut -d\' \' -f3-) - $(cmus-remote -Q | grep -a \'tag title\' | cut -d\' \' -f3-)"', false)
                                               end),
     awful.key({ modkey, "Shift"   }, "p",     function ()
                                                 awful.util.spawn("cmus-remote -u", false)
-                                                awful.util.spawn_with_shell("notify-send \"cmus : $(cmus-remote -Q | grep 'tag artist' | cut -d' ' -f3-) - $(cmus-remote -Q | grep  'tag title' | cut -d' ' -f3-)\"", false)
+                                                awful.util.spawn_with_shell("notify-send \"cmus : $(cmus-remote -Q | grep -a 'tag artist' | cut -d' ' -f3-) - $(cmus-remote -Q | grep -a 'tag title' | cut -d' ' -f3-)\"", false)
                                               end),
 
     -- Prompt
@@ -412,6 +412,8 @@ awful.rules.rules = {
                      buttons = clientbuttons } },
     { rule = { class = "Skype" },
       properties = { tag = tags[last_screen][8] } },
+    { rule = { name = "cmus" },
+      properties = { tag = tags[last_screen][9] } },
     { rule = { class = "Slack" },
       properties = { tag = tags[last_screen][7] } },
     { rule = { class = "Keepassx" },
