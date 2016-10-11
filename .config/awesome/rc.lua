@@ -307,7 +307,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "s",     function () awful.util.spawn("skype") awful.util.spawn("slack") end),
     awful.key({ modkey,           }, "a",     function () awful.util.spawn("android-studio") end),
     awful.key({ modkey,           }, "g",     function () awful.util.spawn("sh /home/mates/home_repo/scripts/suspend_and_lock.sh") end),
-    awful.key({ modkey,           }, "x",     function () awful.util.spawn("keepassx2 /home/mates/home_repo/kyz.kdb") end),
+    awful.key({ modkey,           }, "x",     function () awful.util.spawn("keepassx2") end),
     awful.key({ modkey,           }, "c",     function () awful.util.spawn("chromium") end),
     awful.key({ modkey, "Shift"   }, "m",     function () awful.util.spawn(terminal .. " --title cmus -e cmus") end),
     awful.key({ modkey,           }, "e",     function () awful.util.spawn("evince") end),
