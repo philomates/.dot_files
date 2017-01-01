@@ -73,7 +73,7 @@ zmodload -a zsh/zprof zprof
 #{{{ Variables
 PATH="/usr/local/sbin/:/bin:/sbin:/usr/bin:/usr/sbin:/home/mates/.cabal/bin:/home/mates/bin:/opt/android-sdk/tools:/opt/android-sdk/platform-tools:/usr/share/java/apache-ant/bin:/home/mates/.npm/bin:/home/mates/.gem/ruby/2.3.0/bin:/home/mates/dimagi/commcare-android/scripts/:$PATH"
 
-TZ="EST5EDT"
+TZ="America/Sao_Paulo"
 # TZ="EDT"
 GOPATH="$HOME/gocode/3rdparty:$HOME/gocode/own"
 HISTFILE=$HOME/.zhistory
@@ -223,8 +223,6 @@ fbr() {
 # Query wikipedia
 wiki() { dig +short txt $1.wp.dg.cx;}
 
-alias ccs='ssh mates@login.ccs.neu.edu'
-
 # display top ten running processes sorted by memory usage
 alias tps='ps aux | sort -nk +4 | tail'
 
@@ -232,7 +230,7 @@ alias tmux='tmux -2'
 
 alias install='sudo pacman -S '
 alias search='sudo pacman -Ss'
-alias update='sudo pacman -Syu'
+alias update='yaourt -Syua'
 alias cp='nocorrect cp -r '
 alias scp='scp -r '
 alias mgrep='grep -A1 -B1 -n --color -r --exclude="*.{swp,pyc}"'
@@ -266,6 +264,7 @@ alias lgn="git log --name-only"
 alias gp="git pull"
 alias gst="git status ."
 alias gd="git diff ."
+alias gmm="git merge master"
 alias gdc="git diff --cached ."
 alias gpu="git push origin"
 alias grp="git push -u origin HEAD"
@@ -282,7 +281,7 @@ alias cdo="cd ~and"
 alias cdb="cd ~calabash"
 alias cda="cd ~api"
 alias cdd="cd ~deploy"
-alias cdj="cd ~j2me"
+alias cdj="cd ~clj"
 
 j2me=~/dimagi/commcare-j2me
 and=~/dimagi/commcare-android

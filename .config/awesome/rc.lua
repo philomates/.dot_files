@@ -109,6 +109,26 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- {{{ Wibox
 -- Create a textclock widget
 mytextclock = awful.widget.textclock()
+mytestclock_tooltip = awful.tooltip({
+    objects = { mytextclock },
+    timer_function = function()
+    local now = os.time()
+    local utcdate = os.time(os.date("!*t", now)) - 3600
+    local boston_t = utcdate - (5*3600)
+    local cape_town_t = utcdate + (2*3600)
+    local delhi_t = utcdate + (5.5*3600)
+    local timez = os.date("Boston: %d %b %Y, %H:%M\n", boston_t)
+    .. os.date("Cape Town: %d %b %Y, %H:%M\n", cape_town_t)
+    .. os.date("Delhi: %d %b %Y, %H:%M\n", delhi_t)
+    return timez
+    end,
+})
+mytextclock:connect_signal("button::press", function ()
+  naughty.notify({ title = "Calendar",
+    timeout = 5,
+    text  = "\n" .. awful.util.pread("cal") })
+  end)
+
 battwidget0 = wibox.widget.textbox()
 vicious.register(battwidget0, vicious.widgets.bat,
   function(widget, args)
