@@ -49,10 +49,11 @@ setopt prompt_subst
 
 # Set/unset  shell options
 setopt   notify correct globdots pushdtohome cdablevars autolist
-setopt   correctall autocd recexact longlistjobs
+setopt   autocd recexact longlistjobs
 setopt   autoresume histignoredups pushdsilent
 setopt   autopushd pushdminus extendedglob rcquotes mailwarning
-unsetopt bgnice autoparamslash
+unsetopt bgnice autoparamslash correctall
+
 
 #}}}
 
@@ -75,6 +76,7 @@ PATH="/usr/local/sbin/:/bin:/sbin:/usr/bin:/usr/sbin:/home/mates/.cabal/bin:/hom
 
 TZ="America/Sao_Paulo"
 # TZ="EDT"
+MYVIMRC="$HOME/.vimrc"
 GOPATH="$HOME/gocode/3rdparty:$HOME/gocode/own"
 HISTFILE=$HOME/.zhistory
 HISTSIZE=10000
@@ -118,6 +120,7 @@ LC_CTYPE=C
 
 # Setting ag as the default source for fzf
 export FZF_DEFAULT_COMMAND='ag -l -g ""'
+export XDG_CONFIG_HOME=~/.config
 
 unsetopt ALL_EXPORT
 
@@ -177,7 +180,7 @@ pccz () {
 # move a ccz file to a temp directory and unzip it there
 occz () {
    if [ -f $1 ] ; then
-     dir=`mktemp -d` 
+     dir=`mktemp -d`
      echo $dir
      mv $1 $dir
      cd $dir
@@ -228,8 +231,9 @@ alias tps='ps aux | sort -nk +4 | tail'
 
 alias tmux='tmux -2'
 
-alias install='sudo pacman -S '
-alias search='sudo pacman -Ss'
+alias v='nvim -u ~/.vimrc'
+alias install='yaourt -S '
+alias search='yaourt -Ss'
 alias update='yaourt -Syua'
 alias cp='nocorrect cp -r '
 alias scp='scp -r '
@@ -238,7 +242,7 @@ alias hgrep='history 1 | ag '
 alias psgrep="ps aux | ag "
 alias mget='wget --random-wait -r -p -k -e robots=off -U Mozilla -t45 -l0 '
 alias reload="source ~/.zshrc"
-alias rcedit='vim ~/.zshrc'
+alias rcedit='nvim ~/.zshrc'
 alias nvim='nvim -u ~/.vimrc'
 alias psme='ps aux | grep `whoami`'
 alias findf='find . -type f -name'
@@ -264,6 +268,7 @@ alias lgn="git log --name-only"
 alias gp="git pull"
 alias gst="git status ."
 alias gd="git diff ."
+alias gdm="git diff master"
 alias gmm="git merge master"
 alias gdc="git diff --cached ."
 alias gpu="git push origin"
@@ -305,7 +310,7 @@ bindkey '^[OH' beginning-of-line
 bindkey '^[OF' end-of-line
 bindkey '^[[5~' up-line-or-history
 bindkey '^[[6~' down-line-or-history
-bindkey "^r" history-incremental-search-backward
+#bindkey "^r" history-incremental-search-backward
 bindkey ' ' magic-space    # also do history expansion on space
 bindkey '^I' complete-word # complete on tab, leave expansion to _expand
 #}}}
