@@ -366,10 +366,10 @@ globalkeys = awful.util.table.join(
 
     awful.key({ modkey,           }, "F2",     function () awful.util.spawn("amixer set Master 2%- unmute") end),
     awful.key({ modkey,           }, "F3",     function () awful.util.spawn("amixer set Master 2%+ unmute") end),
-    awful.key({ modkey,           }, "F5",     function () awful.util.spawn("xbacklight -dec 10") end),
-    awful.key({ modkey,           }, "F6",     function () awful.util.spawn("xbacklight -inc 10") end),
+    awful.key({ modkey,           }, "F11",     function () awful.util.spawn("xbacklight -dec 10") end),
+    awful.key({ modkey,           }, "F12",     function () awful.util.spawn("xbacklight -inc 10") end),
     awful.key({ modkey,           }, "F7",     function () awful.util.spawn("sh /home/mates/home_repo/scripts/darken_screen.sh") end),
-    awful.key({ modkey,           }, "F12",    function () awful.util.spawn("sh /home/mates/home_repo/scripts/toggleDual.sh &") end),
+    -- awful.key({ modkey,           }, "F12",    function () awful.util.spawn("sh /home/mates/home_repo/scripts/toggleDual.sh &") end),
 
 
     -- Audio
