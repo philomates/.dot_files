@@ -72,9 +72,9 @@ zmodload -a zsh/zprof zprof
 #}}}
 
 #{{{ Variables
-PATH="/usr/local/sbin/:/bin:/sbin:/usr/bin:/usr/sbin:/home/mates/.cabal/bin:/home/mates/bin:/opt/android-sdk/tools:/opt/android-sdk/platform-tools:/usr/share/java/apache-ant/bin:/home/mates/.npm/bin:/home/mates/.gem/ruby/2.3.0/bin:/home/mates/dimagi/commcare-android/scripts/:$PATH"
+PATH="$HOME/.rbenv/bin:/usr/local/sbin/:/bin:/sbin:/usr/bin:/usr/sbin:/home/mates/.cabal/bin:/home/mates/bin:/opt/android-sdk/tools:/opt/android-sdk/platform-tools:/usr/share/java/apache-ant/bin:/home/mates/.npm/bin:/home/mates/.gem/ruby/2.3.0/bin:/home/mates/.gem/ruby/2.4.0/bin/:/home/mates/.local/bin:/home/mates/bin:$PATH"
 
-TZ="America/Sao_Paulo"
+TZ="Europe/Berlin"
 # TZ="EDT"
 MYVIMRC="$HOME/.vimrc"
 GOPATH="$HOME/gocode/3rdparty:$HOME/gocode/own"
@@ -86,7 +86,6 @@ PAGER='less'
 EDITOR='vim'
 TERMINAL='uxterm'
 LD_LIBRARY_PATH="/usr/local/lib:$LD_LIBRARY_PATH"
-CLASSPATH="/usr/share/java/junit.jar:$CLASSPATH"
 QT_GRAPHICSSYSTEM=native
 JAVA8_HOME=/usr/lib/jvm/java-8-openjdk/bin/java
 
@@ -201,7 +200,7 @@ rationalise-dot() {
 zle -N rationalise-dot
 bindkey . rationalise-dot
 
-eval `keychain --eval id_rsa id_dimagi`
+eval `keychain --eval id_rsa nubank`
 
 # fd - cd to selected directory
 fd() {
@@ -228,6 +227,7 @@ wiki() { dig +short txt $1.wp.dg.cx;}
 
 # display top ten running processes sorted by memory usage
 alias tps='ps aux | sort -nk +4 | tail'
+alias sabesp='~/.local/bin/sabesp'
 
 alias tmux='tmux -2'
 
@@ -280,23 +280,12 @@ alias gc="git commit"
 alias gca="git commit --amend"
 alias gcm="git checkout master"
 alias lb="git for-each-ref --sort=-committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'"
-alias cdm="cd ~/dimagi"
-alias cdc="cd ~cc"
-alias cdo="cd ~and"
-alias cdb="cd ~calabash"
-alias cda="cd ~api"
-alias cdd="cd ~deploy"
-alias cdj="cd ~clj"
 
-j2me=~/dimagi/commcare-j2me
-and=~/dimagi/commcare-android
-calabash=~/dimagi/commcare-ui-tests
-api=~/dimagi/commcare-hq-api
-deploy=~/dimagi/mobile-deploy
-cc=~/dimagi/commcare-core
-hq=~/web/commcare-hq
-tf=~/web/commcare-hq/submodules/touchforms-src/touchforms
-clj=~/programming/clojure
+nu=~/dev/nu
+alias post="lein nu-test :postman :autotest"
+alias mid="lein nu-test :test :autotest"
+alias re="lein repl"
+alias an="lein ancient :allow-snapshots"
 #}}}
 
 #{{{ Key bindings
@@ -396,3 +385,7 @@ zstyle ':completion:*:cd:*' ignore-parents parent pwd
 #}}}
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+source $HOME/.nurc
+source /etc/profile.d/autojump.zsh
+
+unset -f nu
