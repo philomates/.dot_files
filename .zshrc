@@ -88,6 +88,7 @@ TERMINAL='uxterm'
 LD_LIBRARY_PATH="/usr/local/lib:$LD_LIBRARY_PATH"
 QT_GRAPHICSSYSTEM=native
 JAVA8_HOME=/usr/lib/jvm/java-8-openjdk/bin/java
+MYVIMRC=~/.vimrc
 
 autoload -Uz vcs_info
 autoload colors zsh/terminfo
@@ -200,7 +201,7 @@ rationalise-dot() {
 zle -N rationalise-dot
 bindkey . rationalise-dot
 
-eval `keychain --eval id_rsa nubank`
+eval `keychain --eval id_rsa`
 
 # fd - cd to selected directory
 fd() {
@@ -270,6 +271,7 @@ alias gst="git status ."
 alias gd="git diff ."
 alias gdm="git diff master"
 alias gmm="git merge master"
+alias gdm="git diff master"
 alias gdc="git diff --cached ."
 alias gpu="git push origin"
 alias grp="git push -u origin HEAD"
@@ -385,7 +387,4 @@ zstyle ':completion:*:cd:*' ignore-parents parent pwd
 #}}}
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-source $HOME/.nurc
 source /etc/profile.d/autojump.zsh
-
-unset -f nu
