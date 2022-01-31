@@ -1,12 +1,16 @@
-# conky &
-xset -b &
-xset fp rehash
-xbindkeys &
 nm-applet &
-
-sh /home/mates/home_repo/scripts/random_wallpaper.sh &
-
 setxkbmap -option ctrl:nocaps
-setxkbmap -option compose:paus
+
+# Start Xorg server at this DPI
+xrandr --dpi 190 
+
+# Merge & load configuration from .Xresources
+xrdb -merge ~/.Xresources
+xrdb -merge ~/.Xdefaults
+
+# Let QT and GTK autodetect retina screen and autoadjust
+export QT_AUTO_SCREEN_SCALE_FACTOR=1
+export GDK_SCALE=2
+export GDK_DPI_SCALE=0.8
 
 exec dbus-launch awesome

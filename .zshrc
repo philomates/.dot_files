@@ -83,7 +83,7 @@ HISTSIZE=10000
 SAVEHIST=10000
 HOSTNAME="`hostname`"
 PAGER='less'
-EDITOR='vim'
+EDITOR='nvim -u ~/.vimrc'
 TERMINAL='uxterm'
 LD_LIBRARY_PATH="/usr/local/lib:$LD_LIBRARY_PATH"
 QT_GRAPHICSSYSTEM=native
@@ -119,7 +119,7 @@ LANG='en_US.UTF-8'
 LC_CTYPE=C
 
 # Setting ag as the default source for fzf
-export FZF_DEFAULT_COMMAND='ag -l -g ""'
+export FZF_DEFAULT_COMMAND='rg -l .'
 export XDG_CONFIG_HOME=~/.config
 
 unsetopt ALL_EXPORT
@@ -201,7 +201,7 @@ rationalise-dot() {
 zle -N rationalise-dot
 bindkey . rationalise-dot
 
-eval `keychain --eval id_rsa`
+eval `keychain --eval id_ed25519`
 
 # fd - cd to selected directory
 fd() {
@@ -269,9 +269,8 @@ alias lgn="git log --name-only"
 alias gp="git pull"
 alias gst="git status ."
 alias gd="git diff ."
-alias gdm="git diff master"
-alias gmm="git merge master"
-alias gdm="git diff master"
+alias gdm="git diff main"
+alias gmm="git merge main"
 alias gdc="git diff --cached ."
 alias gpu="git push origin"
 alias grp="git push -u origin HEAD"
@@ -280,7 +279,7 @@ alias gco="git co "
 alias ga="git add -u"
 alias gc="git commit"
 alias gca="git commit --amend"
-alias gcm="git checkout master"
+alias gcm="git checkout main"
 alias lb="git for-each-ref --sort=-committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'"
 
 nu=~/dev/nu
