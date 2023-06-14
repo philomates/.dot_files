@@ -72,9 +72,10 @@ zmodload -a zsh/zprof zprof
 #}}}
 
 #{{{ Variables
-PATH="$HOME/.rbenv/bin:/usr/local/sbin/:/bin:/sbin:/usr/bin:/usr/sbin:/home/mates/.cabal/bin:/home/mates/bin:/opt/android-sdk/tools:/opt/android-sdk/platform-tools:/usr/share/java/apache-ant/bin:/home/mates/.npm/bin:/home/mates/.gem/ruby/2.3.0/bin:/home/mates/.gem/ruby/2.4.0/bin/:/home/mates/.local/bin:/home/mates/bin:$PATH"
+PATH="/usr/lib/ccache/bin:$HOME/.rbenv/bin:/usr/local/sbin/:/bin:/sbin:/usr/bin:/usr/sbin:/home/mates/.cabal/bin:/home/mates/bin:/opt/android-sdk/tools:/opt/android-sdk/platform-tools:/usr/share/java/apache-ant/bin:/home/mates/.npm/bin:/home/mates/.gem/ruby/2.3.0/bin:/home/mates/.gem/ruby/2.4.0/bin/:/home/mates/.local/bin:/home/mates/bin:/home/mates/dev/igalia/depot_tools:$PATH"
 
 TZ="Europe/Berlin"
+# TZ="Brazil/East"
 # TZ="EDT"
 MYVIMRC="$HOME/.vimrc"
 GOPATH="$HOME/gocode/3rdparty:$HOME/gocode/own"
@@ -226,9 +227,13 @@ fbr() {
 # Query wikipedia
 wiki() { dig +short txt $1.wp.dg.cx;}
 
+alias ode='ssh odenot.hopto.org -p 6348'
+
 # display top ten running processes sorted by memory usage
 alias tps='ps aux | sort -nk +4 | tail'
 alias sabesp='~/.local/bin/sabesp'
+alias gm=/home/mates/dev/igalia/chromium/src/v8/tools/dev/gm.py
+alias v8gen=/home/mates/dev/igalia/chromium/src/v8/tools/dev/v8gen.py
 
 alias tmux='tmux -2'
 
@@ -282,11 +287,9 @@ alias gca="git commit --amend"
 alias gcm="git checkout main"
 alias lb="git for-each-ref --sort=-committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'"
 
-nu=~/dev/nu
-alias post="lein nu-test :postman :autotest"
-alias mid="lein nu-test :test :autotest"
+v8=~/dev/igalia/chromium/src/v8
+chrom=~/dev/igalia/chromium/src/
 alias re="lein repl"
-alias an="lein ancient :allow-snapshots"
 #}}}
 
 #{{{ Key bindings
@@ -384,6 +387,14 @@ zstyle '*' single-ignored show
 # cd will never select the parent directory (e.g.: cd ../<TAB>)
 zstyle ':completion:*:cd:*' ignore-parents parent pwd
 #}}}
+#
+
+export CCACHE_SLOPPINESS=include_file_mtime
+export CCACHE_CPP2=yes
+export CCACHE_BASEDIR=/home/mates/dev/igalia/chromium
+PATH=/home/mates/dev/igalia/chromium/src/third_party/llvm-build/Release+Asserts/bin:$PATH
+PYTHONPATH=/home/mates/dev/igalia/chromium/src/build:$PYTHONPATH
+
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 source /etc/profile.d/autojump.zsh

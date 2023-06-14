@@ -77,7 +77,10 @@
   :junegunn/vim-easy-align {}
 
   :jlanzarotta/bufexplorer {}
-  :scrooloose/nerdtree {:config #(do 
+  :scrooloose/nerdtree {:config #(do
                                    (vim.keymap.set :n "\\f" ":NERDTreeFind<CR>")
                                    (vim.keymap.set :n :<F6> ":NERDTreeToggle<CR>"))}
-  :airblade/vim-gitgutter {})
+  :airblade/vim-gitgutter {}
+  :echasnovski/mini.trailspace {:config #(let [mini-trailspace (require :mini.trailspace)]
+                                           (mini-trailspace.setup)
+                                           (vim.keymap.set :n :_$ mini-trailspace.trim))})

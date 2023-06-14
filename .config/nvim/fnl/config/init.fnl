@@ -29,12 +29,11 @@
 (vim.cmd "colorscheme gruvbox")
 (set nvim.g.background "dark")
 
-(set ts 2) ; Tab size
-(set sw 2) ; Shift Width - Auth indent size
-(set sts 2) ; Soft Tab Stops - Backspace over 2 spaces like it was one tab
-(set expandtab true) ; Convert tabs to spaces
-(set smarttab true)
-
+(set nvim.g.ts 2) ; Tab size
+(set nvim.g.sw 2) ; Shift Width - Auth indent size
+(set nvim.g.sts 2) ; Soft Tab Stops - Backspace over 2 spaces like it was one tab
+(set nvim.g.expandtab true) ; Convert tabs to spaces
+(set nvim.g.smarttab true)
 
 (set grepprg "rg --vimgrep")
 

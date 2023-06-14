@@ -62,7 +62,7 @@
 (map [:n :v] :<tab> :% {:remap true})
 
 ;; edit config files
-(map :n :<leader>E #(vim.cmd {:cmd "edit" :args ["$HOME/.config/nvim/config/init.lua"]}))
+(map :n :<leader>E #(vim.cmd {:cmd "edit" :args ["$HOME/.config/nvim/fnl/config/init.fnl"]}))
 
 (map :n :<leader>w  #(vim.cmd {:cmd "write"}))
 (map :n :<leader>cl #(vim.cmd {:cmd "close"}))
