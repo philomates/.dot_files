@@ -49,7 +49,7 @@
   :guns/vim-sexp {:mod :sexp}
   :tpope/vim-sexp-mappings-for-regular-people {}
   :tpope/vim-repeat {}
-  :tpope/vim-surround {}
+  :tpope/vim-surround {:config #(do (vim.keymap.set :n :s :ysi))}
 
   ;; parsing system
   :nvim-treesitter/nvim-treesitter {:run ":TSUpdate"
@@ -69,11 +69,14 @@
                      :mod :cmp}
 
   :tpope/vim-fugitive {:requires [:tyru/open-browser.vim]}
-  :tpope/vim-surround {}
   :tpope/vim-commentary {}
 
   ;; clojure
-  :m00qek/baleia.nvim {}
+  :m00qek/baleia.nvim {:config #(let [baleia (require :baleia)
+                                      ba (baleia.setup {:line_starts_at 3})]
+                                  (vim.api.nvim_create_autocmd [:BufWinEnter]
+                                                               {:pattern "conjure-log-*"
+                                                                :callback #(ba.automatically (vim.api.nvim_get_current_buf))}))}
   :junegunn/vim-easy-align {}
 
   :jlanzarotta/bufexplorer {}

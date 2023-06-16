@@ -16,17 +16,24 @@
        ;smart search case
        :smartcase true
        ;shared clipboard with linux
-       :clipboard "unnamedplus"}]
+       :clipboard "unnamedplus"
+       :number true
+       :showmode true
+       :ruler true}]
   (each [option value (pairs options)]
     (core.assoc nvim.o option value)))
 
-(set nvim.o.number true)
-(set nvim.o.ruler true)
 (set nvim.g.ff "unix") ; removes ^M dos stuff
 (set nvim.g.foldmethod "marker") ; auto fold {{{,}}}
 (set nvim.g.nofoldenable true)
+(set nvim.g.nocompatible true)
+
+(set nvim.g.ai true) ; auto indent
+(set nvim.g.si true) ; Smart indet
+(set nvim.g.copyindent true) ; copy the previous indentation on autoindenting
 
 (vim.cmd "colorscheme gruvbox")
+
 (set nvim.g.background "dark")
 
 (set nvim.g.ts 2) ; Tab size
@@ -37,12 +44,7 @@
 
 (set grepprg "rg --vimgrep")
 
-;; always use the system clipboard for operations
-(set vim.o.clipboard "unnamedplus")
-
 (set nvim.g.switchbuf "useopen")
-
-(set vim.o.showmode true)
 
 (set vim.o.statusline "%<%f%r%h%w [%L]%=:b%n %y [%04l,%04v] %p%% %m")
 ;                         | | | |   |     |   |   |   |   |    |

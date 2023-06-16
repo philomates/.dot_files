@@ -1,7 +1,30 @@
-(module config.mapping)
+(module config.mapping
+  {autoload {str conjure.aniseed.string}})
 
 ;; alias function
 (local map vim.keymap.set)
+
+(defn search-clojure-word []
+  (let [full-word (vim.call "expand" "<cword>")
+        split-word (str.split full-word "/")]
+    (if (= 2 (length split-word))
+      (do
+        (vim.cmd "set iskeyword-=/")
+        (let [word (vim.call "expand" "<cword>")]
+          (vim.cmd (.. ":execute \"/"
+                       (if (= word (. split-word 1))
+                         (.. "\\\\<" word "\\\\ze")
+                         (.. "\\\\/\\\\zs" word "\\\\>"))
+                       "\""))
+          (vim.cmd "set iskeyword+=/")))
+      (vim.cmd (.. ":execute \"/\\\\<" full-word "\\\\>\"")))))
+
+(vim.api.nvim_create_autocmd [:FileType]
+                             {:group (vim.api.nvim_create_augroup "filetypes" {})
+                              :pattern :clojure
+                              :callback #(map :n :* search-clojure-word)})
+
+
 
 ;; ; -> :
 (map :n ";" ":")
