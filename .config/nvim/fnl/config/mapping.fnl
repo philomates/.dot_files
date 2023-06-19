@@ -145,6 +145,8 @@
 (map :n "<leader>es" ":sp <C-R>=expand(\"%:p:h\") . \"/\" <CR>")
 (map :n "<leader>ev" ":vsp <C-R>=expand(\"%:p:h\") . \"/\" <CR>")
 
-
 (map :n :<C-G> ":cnext<CR>")
 (map :n :<C-T> ":cprev<CR>")
+
+; grow selection by form
+(map :v :<Space> "ab")
