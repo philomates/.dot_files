@@ -1,5 +1,6 @@
 (module config.plugin.conjure
-  {autoload {nvim aniseed.nvim}})
+  {autoload {nvim aniseed.nvim
+             log conjure.log}})
 
 (set nvim.g.conjure#mapping#doc_word "K")
 (set nvim.g.conjure#client#clojure#nrepl#eval#auto_require false)
@@ -20,7 +21,7 @@
 
 (set nvim.g.conjure#log#strip_ansi_escape_sequences_line_limit 0)
 (set nvim.g.conjure#log#jump_to_latest#enabled false)
-; let g:conjure#log#jump_to_latest#cursor_scroll_position="top"
+(set nvim.g.conjure#log#jump_to_latest#cursor_scroll_position :bottom)
 ; let g:conjure#log#fold#enabled=0
 (set nvim.g.conjure#log#wrap 1)
 
@@ -40,3 +41,5 @@
 (vim.keymap.set :n :<C-S-Space> ":ConjureEvalFile<CR>")
 (vim.keymap.set :n :<C-Space> ":ConjureEvalRootForm<CR>")
 (vim.keymap.set :n :<Space> ":ConjureEvalCurrentForm<CR>")
+
+(vim.keymap.set :n :<C-d> #(log.jump-to-latest))

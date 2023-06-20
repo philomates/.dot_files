@@ -22,9 +22,7 @@
 (vim.api.nvim_create_autocmd [:FileType]
                              {:group (vim.api.nvim_create_augroup "filetypes" {})
                               :pattern :clojure
-                              :callback #(map :n :* search-clojure-word)})
-
-
+                              :callback #(map :n :& search-clojure-word)})
 
 ;; ; -> :
 (map :n ";" ":")
