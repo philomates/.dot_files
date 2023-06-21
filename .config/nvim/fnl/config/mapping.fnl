@@ -148,3 +148,8 @@
 
 ; grow selection by form
 (map :v :<Space> "ab")
+
+; Simulate readline/emacs's jump to start/end of line in insert mode
+(map :c :<C-a> "<Home>")
+(map :c :<C-e> "<End>")
+(map :c :<C-k> "<C-\\>estrpart(getcmdline(),0,getcmdpos()-1)<CR>")

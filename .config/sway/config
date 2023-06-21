@@ -116,10 +116,10 @@ bindsym $mod+semicolon exec swaymsg "[con_mark=$(zenity --entry --text='Enter ma
     bindsym $mod+$up focus up
     bindsym $mod+$right focus right
     # Or use $mod+[up|down|left|right]
-    # bindsym $mod+Left focus left
+    bindsym $mod+Left exec ~/.config/sway/move_workspaces.clj left
     # bindsym $mod+Down focus down
     # bindsym $mod+Up focus up
-    # bindsym $mod+Right focus right
+    bindsym $mod+Right exec ~/.config/sway/move_workspaces.clj right
 
     # Move the focused window with the same, but add Shift
     bindsym $mod+Shift+$left move left
@@ -185,12 +185,6 @@ bindsym $mod+semicolon exec swaymsg "[con_mark=$(zenity --entry --text='Enter ma
     # Move focus to the parent container
     bindsym $mod+p focus parent
 
-    bindsym $mod+Right exec env RUST_BACKTRACE=1 \
-        swayr next-window >> /tmp/swayr.log 2>&2
-
-    bindsym $mod+Left exec env RUST_BACKTRACE=1 \
-        swayr prev-window >> /tmp/swayr.log 2>&2
-#
 # Scratchpad:
 #
     # Sway has a "scratchpad", which is a bag of holding for windows.
@@ -238,6 +232,5 @@ bar {
 }
 set $menu wofi --show=drun --lines=5 --prompt=""
 exec_always nm-applet --indicator
-exec env RUST_BACKTRACE=1 swayrd > /tmp/swayrd.log 2>&1
 
 include /etc/sway/config.d/*
