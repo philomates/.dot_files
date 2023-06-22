@@ -106,7 +106,7 @@
 (map :n :^ "0")
 
 ;; always center the screen after any movement command
-(map :n :<C-d> "<C-d>zz")
+; (map :n :<C-d> "<C-d>zz")
 (map :n :<C-f> "<C-f>zz")
 (map :n :<C-b> "<C-b>zz")
 (map :n :<C-u> "<C-u>zz")

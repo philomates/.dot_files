@@ -19,13 +19,13 @@
        :clipboard "unnamedplus"
        :number true
        :showmode true
+       :foldenable false
        :ruler true}]
   (each [option value (pairs options)]
     (core.assoc nvim.o option value)))
 
 (set nvim.g.ff "unix") ; removes ^M dos stuff
 (set nvim.g.foldmethod "marker") ; auto fold {{{,}}}
-(set nvim.g.nofoldenable true)
 (set nvim.g.nocompatible true)
 
 (set nvim.g.ai true) ; auto indent
@@ -62,3 +62,4 @@
 
 (require :config.plugin)
 (require :config.mapping)
+(require :config.notes)

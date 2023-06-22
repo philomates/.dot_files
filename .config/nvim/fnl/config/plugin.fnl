@@ -79,6 +79,11 @@
                                                                 :callback #(ba.automatically (vim.api.nvim_get_current_buf))}))}
   :junegunn/vim-easy-align {}
 
+  :jghauser/follow-md-links.nvim {:config (fn []
+                                            (let [fl (require :follow-md-links)]
+                                              (vim.api.nvim_create_autocmd [:FileType]
+                                                                           {:pattern :markdown
+                                                                            :callback #(vim.keymap.set :n "gd" (fn [] (fl.follow_link)))})))}
   :jlanzarotta/bufexplorer {}
   :scrooloose/nerdtree {:config #(do
                                    (vim.keymap.set :n "\\f" ":NERDTreeFind<CR>")
