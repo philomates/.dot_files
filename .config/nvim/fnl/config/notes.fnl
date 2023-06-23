@@ -5,11 +5,11 @@
              query vim.treesitter.query
              treesitter vim.treesitter}})
 
-(defn starts-with? [string prefix]
-  (= (string.sub string 1 (length prefix)) prefix))
-
+;; we assume all notes are in this directory and with the `.md` file extension
 (def dir "~/notes/")
 
+;; open a note if the query matches exactly one result
+;; otherwise show the matches in a telescope picker
 (defn open [title-query]
   (let [rg-command (.. "cd " dir " && rg  --files . | rg " title-query)
         one-match? (= "1" (str.trim (vim.fn.system (.. rg-command " | wc -l"))))]
@@ -20,6 +20,7 @@
                     :prompt_title (.. "notes | " title-query)}))))
 ; (open "note")
 
+;; list of all note files
 (defn note_files []
   (-> (vim.fn.system (.. "cd " dir " && rg --files *.md | sort"))
       (str.trim)
@@ -27,6 +28,7 @@
 
 ; (note_files)
 
+;; find all links in the given markdown buffer
 (defn get_links_for_buffer [bufnr]
   (let [language_tree (vim.treesitter.get_parser bufnr "markdown_inline")
         syntax_tree (. (language_tree:parse) 1)
@@ -46,6 +48,10 @@
 
 ; (get_links_for_buffer 1)
 
+(defn starts-with? [string prefix]
+  (= (string.sub string 1 (length prefix)) prefix))
+
+;; add links from a note into the global note linke datastructure
 (defn process_note [note->referencing-notes note]
   (let [current-buf (vim.api.nvim_get_current_buf)]
     (vim.cmd (.. "cd " dir))
@@ -55,7 +61,8 @@
         (each [_ [desc uri row col] (pairs forward-links)]
           (when (not (or (starts-with? uri "http:")
                          (starts-with? uri "https:")))
-          (let [links (. note->referencing-notes uri)
+          (let [uri (string.gsub uri "^./" "")
+                links (. note->referencing-notes uri)
                 updated-links (if links
                                  (do (table.insert links [note row col desc]) links)
                                  [[note row col desc]])]
@@ -66,15 +73,16 @@
 
 ; (process_note {} "./2022.12.22.note.md")
 
+;; build link graph for all notes
 (defn process_notes []
   (let [note->referencing-notes {}]
     (each [_ note (ipairs (note_files))]
       (process_note note->referencing-notes note))
     note->referencing-notes))
 
-; (process_notes)
-
-(defn generate_backlinks [note->referencing-notes]
+;; given a link graph, serialize the data into a file in quickfix format, where
+;; each note's links are grouped in ___start_<note> / ___end_<note> tags
+(defn generate_backlinks_file [note->referencing-notes]
   (let [current-buf (vim.api.nvim_get_current_buf)
         quickfix-lines []]
     (vim.cmd (.. "e " dir ".backlinks"))
@@ -85,11 +93,13 @@
       (table.insert quickfix-lines (.. "___end_" k)))
     (vim.api.nvim_buf_set_lines 0 0 -1 true quickfix-lines)
     (vim.cmd "w")
-    (when (> (length (vim.api.nvim_list_bufs)) 1)
+    (when (and (not (= current-buf (vim.api.nvim_get_current_buf)))
+               (> (length (vim.api.nvim_list_bufs)) 1))
       (vim.cmd (.. "b" current-buf " | bd#")))))
 
-; (generate_backlinks (process_notes)))
+; (generate_backlinks_file (process_notes)))
 
+;; given a note name, show backlinks (from .backlinks file) in the quickfix window
 (defn show_backlinks [note]
   (vim.fn.setqflist [])
   (vim.cmd (.. "caddexpr \""
@@ -103,8 +113,8 @@
 (defn show_buffer_backlinks []
   (show_backlinks (vim.fn.expand "%:t")))
 
-;; generate note backlinks
-(vim.keymap.set :n :<leader>ng #(generate_backlinks (process_notes)))
+;; generate note backlinks (and write them to the ~/notes/.backlinks file)
+(vim.keymap.set :n :<leader>ng #(generate_backlinks_file (process_notes)))
 
-;; show backlinks for file
+;; show backlinks for current note file
 (vim.keymap.set :n :<leader>nb #(show_buffer_backlinks))
