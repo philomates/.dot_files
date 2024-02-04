@@ -35,6 +35,9 @@
 (map :n "<C-j>" "<C-w>j")
 (map :n "<C-l>" "<C-w>l")
 (map :n "<C-h>" "<C-w>h")
+; Movement between tabs
+(map :n "<C-S-l>" ":tabnext <CR>")
+(map :n "<C-S-h>" ":tabprev <CR>")
 
 ; Maps Alt-[h,j,k,l] to resizing a window split
 (map :n "<C-LEFT>" "<C-w><")
@@ -116,7 +119,7 @@
 (map :n :C "\"_C")
 
 ;; Keep the cursor in place while joining lines
-(map :n :J "mzJ`z")
+; (map :n :J "mzJ`z")
 
 ;; similar to vmap but only for visual mode - NOT select mode
 ;; maintains the currently visual selection between invocations of '<' and '>'

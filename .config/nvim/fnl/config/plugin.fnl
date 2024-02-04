@@ -40,7 +40,12 @@
   :nvim-telescope/telescope.nvim {:requires [:nvim-telescope/telescope-ui-select.nvim
                                              :nvim-lua/popup.nvim
                                              :nvim-lua/plenary.nvim]
-                                  :mod :telescope}
+                                  :mod :telescope
+                                  :config #(vim.api.nvim_create_autocmd
+                                             [:WinLeave]
+                                             {:callback #(when (and (= vim.bo.ft "TelescopePrompt")
+                                                                  (= (vim.fn.mode) "i"))
+                                                           (vim.api.nvim_feedkeys (vim.api.nvim_replace_termcodes "<Esc>" true false true) "i" false))})}
 
   ;; repl tools
   :Olical/conjure {:branch :master :mod :conjure}
@@ -70,6 +75,9 @@
 
   :tpope/vim-fugitive {:requires [:tyru/open-browser.vim]}
   :tpope/vim-commentary {}
+  ;; cpp
+  :jackguo380/vim-lsp-cxx-highlight {}
+  :prabirshrestha/vim-lsp {}
 
   ;; clojure
   :m00qek/baleia.nvim {:config #(let [baleia (require :baleia)
@@ -84,11 +92,13 @@
                                               (vim.api.nvim_create_autocmd [:FileType]
                                                                            {:pattern :markdown
                                                                             :callback #(vim.keymap.set :n "gd" (fn [] (fl.follow_link)))})))}
+  :bakpakin/janet.vim {}
   :jlanzarotta/bufexplorer {}
   :scrooloose/nerdtree {:config #(do
                                    (vim.keymap.set :n "\\f" ":NERDTreeFind<CR>")
                                    (vim.keymap.set :n :<F6> ":NERDTreeToggle<CR>"))}
-  :airblade/vim-gitgutter {}
+  :airblade/vim-gitgutter {:branch :main}
   :echasnovski/mini.trailspace {:config #(let [mini-trailspace (require :mini.trailspace)]
                                            (mini-trailspace.setup)
-                                           (vim.keymap.set :n :_$ mini-trailspace.trim))})
+                                           (vim.keymap.set :n :_$ mini-trailspace.trim))}
+  )

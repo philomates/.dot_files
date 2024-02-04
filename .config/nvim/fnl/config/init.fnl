@@ -40,7 +40,7 @@
 (set nvim.g.sw 2) ; Shift Width - Auth indent size
 (set nvim.g.sts 2) ; Soft Tab Stops - Backspace over 2 spaces like it was one tab
 (set nvim.g.expandtab true) ; Convert tabs to spaces
-(set nvim.g.smarttab true)
+(set nvim.g.smarttab false)
 
 (set grepprg "rg --vimgrep")
 

@@ -52,6 +52,7 @@
                     (nvim.buf_set_keymap bufnr :n :<leader>le "<cmd>lua vim.diagnostic.open_float()<CR>" {:noremap true})
                     (nvim.buf_set_keymap bufnr :n :<leader>lq "<cmd>lua vim.diagnostic.setloclist()<CR>" {:noremap true})
                     (nvim.buf_set_keymap bufnr :n :<leader>lf "<cmd>lua vim.lsp.buf.format()<CR>" {:noremap true})
+                    (nvim.buf_set_keymap bufnr :v :<leader>lf "<cmd>lua vim.lsp.buf.format()<CR>" {:noremap true})
                     (nvim.buf_set_keymap bufnr :n :<leader>lj "<cmd>lua vim.diagnostic.goto_next()<CR>" {:noremap true})
                     (nvim.buf_set_keymap bufnr :n :<leader>lk "<cmd>lua vim.diagnostic.goto_prev()<CR>" {:noremap true})
                     ; telescope
@@ -65,3 +66,16 @@
   (lsp.clojure_lsp.setup {:on_attach on_attach
                           :handlers handlers
                           :capabilities capabilities}))
+
+(defn format_form []
+  (let [row-and-col (nvim.win_get_cursor 0)]
+    ;; select entire top form using `vim-sexp` plugin
+    (nvim.eval "sexp#select_current_top_list('v', 0)")
+    ;; run formatter
+    (nvim.command "lua vim.lsp.buf.format()")
+    ;; escape out of visual mode
+    (nvim.feedkeys "" :n false)
+    ;; restore curser location
+    (nvim.win_set_cursor 0 row-and-col)))
+
+(vim.keymap.set :n :<leader>ff #(format_form))

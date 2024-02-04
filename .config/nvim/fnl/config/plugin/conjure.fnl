@@ -11,7 +11,7 @@
 (set nvim.g.conjure#client#fennel#stdio#compile true)
 (set nvim.g.conjure#client#fennel#stdio#command "fennel")
 (set nvim.g.conjure#client#fennel#stdio#encoding "base64")
-(set nvim.g.conjure#client#fennel#stdio#command "websocat --protocol bus.sp.nanomsg.org ws://192.168.178.114:5555")
+(set nvim.g.conjure#client#fennel#stdio#command "websocat --protocol bus.sp.nanomsg.org ws://192.168.178.138:5555")
 (set nvim.g.conjure#client#fennel#stdio#prompt_pattern "\n")
 
 ; let g:conjure#client#fennel#aniseed#aniseed_module_prefix = "aniseed."
@@ -43,3 +43,7 @@
 (vim.keymap.set :n :<Space> ":ConjureEvalCurrentForm<CR>")
 
 (vim.keymap.set :n :<C-d> #(log.jump-to-latest))
+
+(vim.keymap.set :n :<localleader>cs #(do
+                                       (vim.cmd "w")
+                                       (vim.cmd (.. "ConjureEval (nextjournal.clerk/show! \"" (vim.fn.expand "%:p") "\")"))))
